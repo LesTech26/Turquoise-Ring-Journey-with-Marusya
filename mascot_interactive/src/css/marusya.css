@@ -1,0 +1,791 @@
+/* ============================================
+   МАСКОТ МАРУСЯ — Основные стили
+   Версия: 1.0.0
+   Автор: Разработчик 5
+   ============================================ */
+
+/* ----- Контейнер маскота ----- */
+#marusya-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    font-family: 'Comfortaa', 'Jost', 'Arial', sans-serif;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ----- Аватар маскота ----- */
+.marusya {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 4px 15px rgba(23, 162, 184, 0.3));
+}
+
+/* Ховер эффект */
+.marusya:hover {
+    transform: scale(1.1) rotate(-3deg);
+    filter: drop-shadow(0 6px 25px rgba(23, 162, 184, 0.5));
+}
+
+/* Активное состояние (клик) */
+.marusya:active {
+    transform: scale(0.95);
+}
+
+/* Обёртка аватара */
+.marusya-avatar-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Само изображение */
+.marusya-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #17A2B8, #0D7A8A);
+    box-shadow: 0 4px 20px rgba(23, 162, 184, 0.4);
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ----- Статус-индикатор (точка) ----- */
+.marusya-status {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2.5px solid white;
+    background: #4CAF50;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Состояния статуса */
+.marusya-status.thinking {
+    background: #FF9800;
+    animation: pulse 1s ease infinite;
+}
+
+.marusya-status.sad {
+    background: #f44336;
+}
+
+.marusya-status.celebrate {
+    background: #FFD700;
+    animation: pulse 0.5s ease infinite;
+}
+
+.marusya-status.surprised {
+    background: #2196F3;
+    animation: pulse 0.3s ease 2;
+}
+
+/* ----- Облачко с речью ----- */
+.speech-bubble {
+    position: absolute;
+    bottom: 100px;
+    right: -10px;
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 20px;
+    padding: 16px 20px;
+    max-width: 320px;
+    min-width: 180px;
+    width: max-content;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+    border: 2px solid #17A2B8;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: bottom right;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Скрытое состояние */
+.speech-bubble.hidden {
+    opacity: 0;
+    transform: scale(0.7) translateY(20px);
+    pointer-events: none;
+}
+
+/* Видимое состояние */
+.speech-bubble.show {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+}
+
+/* Хвостик облачка (треугольник) */
+.speech-tail {
+    position: absolute;
+    bottom: -14px;
+    right: 30px;
+    width: 0;
+    height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 16px solid #17A2B8;
+}
+
+/* Внутренний хвостик (белый) */
+.speech-tail::after {
+    content: '';
+    position: absolute;
+    top: -18px;
+    left: -12px;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 14px solid white;
+}
+
+/* Контент облачка */
+.speech-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+/* Текст в облачке */
+.speech-text {
+    flex: 1;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #2A2420;
+    font-weight: 400;
+    word-break: break-word;
+}
+
+/* Кавычки для текста */
+.speech-text::before {
+    content: '"';
+    color: #17A2B8;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.speech-text::after {
+    content: '"';
+    color: #17A2B8;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* Кнопки действий в облачке */
+.speech-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.speak-btn,
+.close-speech-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px 6px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    line-height: 1;
+    color: #666;
+}
+
+.speak-btn:hover {
+    background: #e3f2fd;
+    transform: scale(1.15);
+    color: #17A2B8;
+}
+
+.speak-btn:active {
+    transform: scale(0.9);
+}
+
+.close-speech-btn:hover {
+    background: #ffebee;
+    transform: scale(1.15);
+    color: #f44336;
+}
+
+.close-speech-btn:active {
+    transform: scale(0.9);
+}
+
+/* ----- Кнопки действий маскота (появляются при ховере) ----- */
+.marusya-actions {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+}
+
+.marusya:hover .marusya-actions {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.marusya-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: #17A2B8;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.marusya-action-btn:hover {
+    transform: scale(1.15);
+    background: #138496;
+}
+
+.marusya-action-btn:active {
+    transform: scale(0.9);
+}
+
+/* ----- Меню маскота ----- */
+.marusya-menu {
+    position: absolute;
+    bottom: 110px;
+    right: 0;
+    background: white;
+    border-radius: 16px;
+    padding: 8px 0;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e0e0e0;
+    min-width: 180px;
+    transition: all 0.3s ease;
+    transform-origin: bottom right;
+}
+
+/* Скрытое меню */
+.marusya-menu.hidden {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    pointer-events: none;
+}
+
+/* Видимое меню */
+.marusya-menu:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Список меню */
+.marusya-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.marusya-menu ul li button {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    color: #2A2420;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.marusya-menu ul li button:hover {
+    background: #f5f5f5;
+}
+
+.marusya-menu ul li button:active {
+    background: #e8e8e8;
+}
+
+/* ----- Подсказки (тултипы) ----- */
+.marusya-tooltip {
+    position: fixed;
+    z-index: 10001;
+    background: rgba(44, 62, 80, 0.95);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 300px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-family: 'Comfortaa', 'Jost', 'Arial', sans-serif;
+}
+
+.marusya-tooltip.hidden {
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+    pointer-events: none;
+}
+
+.marusya-tooltip:not(.hidden) {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+}
+
+/* Стрелка тултипа */
+.marusya-tooltip .tooltip-arrow {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid rgba(44, 62, 80, 0.95);
+}
+
+/* Контент тултипа */
+.marusya-tooltip .tooltip-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.marusya-tooltip .tooltip-text {
+    flex: 1;
+}
+
+.marusya-tooltip .tooltip-close {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px;
+    transition: color 0.2s ease;
+    line-height: 1;
+}
+
+.marusya-tooltip .tooltip-close:hover {
+    color: white;
+}
+
+/* Подсветка элемента при тултипе */
+.tooltip-highlight {
+    position: relative;
+    z-index: 9998;
+    animation: highlightPulse 1s ease 2;
+}
+
+@keyframes highlightPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(23, 162, 184, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 20px 8px rgba(23, 162, 184, 0.3);
+    }
+}
+
+/* ============================================
+   АНИМАЦИИ ЭМОЦИЙ
+   ============================================ */
+
+/* Счастливая — подпрыгивание */
+.marusya.happy .marusya-avatar {
+    animation: marusyaBounce 2s ease infinite;
+}
+
+@keyframes marusyaBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+/* Грустная — покачивание */
+.marusya.sad .marusya-avatar {
+    animation: marusyaWobble 0.6s ease;
+}
+
+@keyframes marusyaWobble {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-8deg);
+    }
+    75% {
+        transform: rotate(8deg);
+    }
+}
+
+/* Думает — наклон с задумчивостью */
+.marusya.thinking .marusya-avatar {
+    animation: marusyaThink 1.5s ease infinite;
+}
+
+@keyframes marusyaThink {
+    0%, 100% {
+        transform: rotate(0deg) scale(1);
+    }
+    25% {
+        transform: rotate(-5deg) scale(0.98);
+    }
+    75% {
+        transform: rotate(5deg) scale(1.02);
+    }
+}
+
+/* Удивлена — встряска */
+.marusya.surprised .marusya-avatar {
+    animation: marusyaSurprise 0.5s ease;
+}
+
+@keyframes marusyaSurprise {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.2) rotate(-5deg);
+    }
+    60% {
+        transform: scale(0.9) rotate(3deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* Празднует — вращение */
+.marusya.celebrate .marusya-avatar {
+    animation: marusyaCelebrate 0.5s ease infinite alternate;
+}
+
+@keyframes marusyaCelebrate {
+    0% {
+        transform: scale(1) rotate(-8deg);
+    }
+    100% {
+        transform: scale(1.1) rotate(8deg);
+    }
+}
+
+/* ============================================
+   ДОПОЛНИТЕЛЬНЫЕ АНИМАЦИИ
+   ============================================ */
+
+/* Пульсация для статуса */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* Появление облачка */
+@keyframes speechAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0.7) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.speech-bubble.show {
+    animation: speechAppear 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ============================================
+   АДАПТИВНОСТЬ
+   ============================================ */
+
+/* Планшеты (768px - 1024px) */
+@media (max-width: 1024px) {
+    #marusya-container {
+        bottom: 25px;
+        right: 25px;
+    }
+    
+    .marusya {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .speech-bubble {
+        max-width: 280px;
+        min-width: 160px;
+        padding: 14px 18px;
+    }
+    
+    .speech-text {
+        font-size: 14px;
+    }
+}
+
+/* Планшеты маленькие (576px - 768px) */
+@media (max-width: 768px) {
+    #marusya-container {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .marusya {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .speech-bubble {
+        max-width: 250px;
+        min-width: 140px;
+        bottom: 85px;
+        right: -5px;
+        padding: 14px 16px;
+    }
+    
+    .speech-text {
+        font-size: 13px;
+    }
+    
+    .speech-tail {
+        right: 20px;
+    }
+    
+    .marusya-status {
+        width: 16px;
+        height: 16px;
+        border-width: 2px;
+    }
+}
+
+/* Мобильные (< 576px) */
+@media (max-width: 576px) {
+    #marusya-container {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .marusya {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .speech-bubble {
+        max-width: 200px;
+        min-width: 120px;
+        bottom: 75px;
+        right: 0;
+        padding: 12px 14px;
+        border-radius: 16px;
+    }
+    
+    .speech-text {
+        font-size: 12px;
+        line-height: 1.4;
+    }
+    
+    .speech-text::before,
+    .speech-text::after {
+        font-size: 16px;
+    }
+    
+    .speech-actions .speak-btn,
+    .speech-actions .close-speech-btn {
+        font-size: 13px;
+        padding: 2px 4px;
+    }
+    
+    .speech-tail {
+        right: 15px;
+        border-left-width: 10px;
+        border-right-width: 10px;
+        border-top-width: 12px;
+    }
+    
+    .speech-tail::after {
+        top: -14px;
+        left: -9px;
+        border-left-width: 9px;
+        border-right-width: 9px;
+        border-top-width: 10px;
+    }
+    
+    .marusya-status {
+        width: 14px;
+        height: 14px;
+        border-width: 2px;
+        bottom: 1px;
+        right: 1px;
+    }
+    
+    .marusya-actions {
+        top: -10px;
+        right: -10px;
+    }
+    
+    .marusya-action-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 12px;
+    }
+    
+    .marusya-menu {
+        min-width: 150px;
+        bottom: 90px;
+        right: -5px;
+        padding: 6px 0;
+        border-radius: 12px;
+    }
+    
+    .marusya-menu ul li button {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    .marusya-tooltip {
+        max-width: 220px;
+        font-size: 12px;
+        padding: 10px 14px;
+    }
+}
+
+/* Очень маленькие экраны (< 400px) */
+@media (max-width: 400px) {
+    #marusya-container {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .marusya {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .speech-bubble {
+        max-width: 160px;
+        min-width: 100px;
+        bottom: 65px;
+        right: -5px;
+        padding: 10px 12px;
+    }
+    
+    .speech-text {
+        font-size: 11px;
+    }
+    
+    .speech-actions .speak-btn,
+    .speech-actions .close-speech-btn {
+        font-size: 11px;
+        padding: 2px 3px;
+    }
+    
+    .marusya-status {
+        width: 12px;
+        height: 12px;
+        border-width: 1.5px;
+    }
+    
+    .marusya-action-btn {
+        width: 22px;
+        height: 22px;
+        font-size: 10px;
+    }
+}
+
+/* ============================================
+   СОВМЕСТИМОСТЬ С ТЁМНОЙ ТЕМОЙ
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+    .speech-bubble {
+        background: rgba(30, 30, 40, 0.97);
+        border-color: #17A2B8;
+    }
+    
+    .speech-text {
+        color: #e8e8e8;
+    }
+    
+    .speech-tail::after {
+        border-top-color: rgba(30, 30, 40, 0.97);
+    }
+    
+    .marusya-menu {
+        background: #2a2a3a;
+        border-color: #3a3a4a;
+    }
+    
+    .marusya-menu ul li button {
+        color: #e8e8e8;
+    }
+    
+    .marusya-menu ul li button:hover {
+        background: #3a3a4a;
+    }
+    
+    .marusya-tooltip {
+        background: rgba(20, 20, 30, 0.95);
+    }
+    
+    .marusya-tooltip .tooltip-arrow {
+        border-top-color: rgba(20, 20, 30, 0.95);
+    }
+}
+
+/* ============================================
+   ПОДДЕРЖКА УМЕНЬШЕННОЙ АНИМАЦИИ
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .marusya,
+    .marusya-avatar,
+    .speech-bubble,
+    .marusya-menu,
+    .marusya-tooltip {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .marusya.happy .marusya-avatar {
+        animation: none;
+    }
+    
+    .marusya.celebrate .marusya-avatar {
+        animation: none;
+    }
+    
+    .marusya.thinking .marusya-avatar {
+        animation: none;
+    }
+    
+    .speech-bubble.show {
+        animation: none;
+        opacity: 1;
+        transform: scale(1);
+    }
+}

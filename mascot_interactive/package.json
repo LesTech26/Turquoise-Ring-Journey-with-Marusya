@@ -1,0 +1,29 @@
+{
+  "name": "marusya",
+  "version": "1.0.0",
+  "description": "Маскот Маруся — интерактивный гид по бирюзовому кольцу",
+  "main": "src/js/Marusya.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch"
+  },
+  "keywords": [
+    "marusya",
+    "mascot",
+    "interactive",
+    "speech",
+    "animation",
+    "turquoise"
+  ],
+  "author": "Разработчик 5",
+  "license": "MIT",
+  "dependencies": {
+    "canvas-confetti": "^1.6.0"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.0"
+  }
+}

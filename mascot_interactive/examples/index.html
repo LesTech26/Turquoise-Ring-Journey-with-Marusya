@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐻 Маруся — Демо-версия</title>
+    
+    <!-- Подключаем стили Маруси -->
+    <link rel="stylesheet" href="../src/css/marusya.css">
+    
+    <style>
+        /* ============================================
+           ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ ДЕМО
+           ============================================ */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background: linear-gradient(135deg, #f5f0e8 0%, #e8e0d5 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .demo-container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .demo-header h1 {
+            font-size: 2.8rem;
+            color: #17A2B8;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        
+        .demo-header h1 span {
+            display: inline-block;
+            animation: wave 2s ease-in-out infinite;
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(15deg); }
+        }
+        
+        .demo-header p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-top: 8px;
+        }
+        
+        .demo-header .badge {
+            display: inline-block;
+            background: #17A2B8;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+        
+        /* Инфо-блоки */
+        .info-box {
+            background: #f8f6f2;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            border-left: 4px solid #17A2B8;
+        }
+        
+        .info-box h3 {
+            color: #2A2420;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        
+        .info-box p {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .info-box code {
+            background: #e8e4dc;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #17A2B8;
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* Кнопки */
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .demo-btn {
+            padding: 10px 22px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            font-family: inherit;
+        }
+        
+        .demo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .demo-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .demo-btn.primary {
+            background: #17A2B8;
+            color: white;
+        }
+        
+        .demo-btn.primary:hover {
+            background: #138496;
+        }
+        
+        .demo-btn.success {
+            background: #4A7C59;
+            color: white;
+        }
+        
+        .demo-btn.success:hover {
+            background: #3d6b4b;
+        }
+        
+        .demo-btn.warning {
+            background: #E08D3C;
+            color: white;
+        }
+        
+        .demo-btn.warning:hover {
+            background: #c97a2e;
+        }
+        
+        .demo-btn.danger {
+            background: #CC0000;
+            color: white;
+        }
+        
+        .demo-btn.danger:hover {
+            background: #a80000;
+        }
+        
+        .demo-btn.gold {
+            background: #FFD700;
+            color: #333;
+        }
+        
+        .demo-btn.gold:hover {
+            background: #f0c800;
+        }
+        
+        .demo-btn.purple {
+            background: #7B4B9A;
+            color: white;
+        }
+        
+        .demo-btn.purple:hover {
+            background: #6a3d84;
+        }
+        
+        .demo-btn.outline {
+            background: transparent;
+            color: #17A2B8;
+            border: 2px solid #17A2B8;
+        }
+        
+        .demo-btn.outline:hover {
+            background: #17A2B8;
+            color: white;
+        }
+        
+        .demo-btn.small {
+            padding: 6px 14px;
+            font-size: 13px;
+        }
+        
+        /* Секции */
+        .demo-section {
+            margin: 25px 0;
+            padding-top: 20px;
+            border-top: 2px dashed #e0d8cc;
+        }
+        
+        .demo-section h3 {
+            color: #2A2420;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .demo-section h3 .count {
+            background: #17A2B8;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 10px;
+            border-radius: 12px;
+        }
+        
+        /* Сетка для событий */
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        /* Статус-бар */
+        .status-bar {
+            background: #2A2420;
+            color: #a0a0a0;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            margin-top: 20px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .status-bar .highlight {
+            color: #FFD700;
+        }
+        
+        .status-bar .info {
+            color: #17A2B8;
+        }
+        
+        /* API-список */
+        .api-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .api-item {
+            background: #f8f6f2;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-family: 'Courier New', monospace;
+            color: #333;
+            border: 1px solid #e8e4dc;
+        }
+        
+        .api-item .method {
+            color: #17A2B8;
+            font-weight: 700;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            .demo-container {
+                padding: 20px;
+            }
+            
+            .demo-header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-buttons {
+                gap: 8px;
+            }
+            
+            .demo-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+            
+            .event-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .event-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="demo-container">
+        
+        <!-- ===== HEADER ===== -->
+        <div class="demo-header">
+            <h1>🐻 <span>Маруся</span></h1>
+            <p>Интерактивный гид по бирюзовому кольцу России</p>
+            <span class="badge">🔬 Демо-версия</span>
+        </div>
+        
+        <!-- ===== ИНФО ===== -->
+        <div class="info-box">
+            <h3>💡 Как использовать</h3>
+            <p>
+                Кликни по <strong>Марусе</strong> в правом нижнем углу, чтобы вызвать меню. 
+                Наведи на неё, чтобы увидеть кнопку скрытия. 
+                Используй кнопки ниже для тестирования различных функций.
+            </p>
+        </div>
+        
+        <!-- ===== КНОПКИ ДЕЙСТВИЙ ===== -->
+        <div class="demo-section">
+            <h3>🎯 Действия <span class="count">кликни и проверь</span></h3>
+            <div class="demo-buttons">
+                <button class="demo-btn primary" onclick="sayHello()">👋 Сказать привет</button>
+                <button class="demo-btn success" onclick="setHappy()">😊 Счастливая</button>
+                <button class="demo-btn warning" onclick="setSad()">🥺 Грустная</button>
+                <button class="demo-btn gold" onclick="celebrate()">🎉 Праздновать</button>
+                <button class="demo-btn purple" onclick="visitDistrict()">🗺️ Посетить район</button>
+                <button class="demo-btn outline" onclick="toggleSound()">🔊 Звук</button>
+            </div>
+        </div>
+        
+        <!-- ===== СОБЫТИЯ ===== -->
+        <div class="demo-section">
+            <h3>📡 События <span class="count">отправь событие</span></h3>
+            <div class="event-grid">
+                <button class="demo-btn success small" onclick="triggerEvent('districtComplete')">
+                    ✅ Завершить район
+                </button>
+                <button class="demo-btn gold small" onclick="triggerEvent('gameWin')">
+                    🎮 Победа в игре
+                </button>
+                <button class="demo-btn purple small" onclick="triggerEvent('achievementUnlocked')">
+                    🏅 Достижение
+                </button>
+                <button class="demo-btn danger small" onclick="triggerEvent('progressReset')">
+                    🔄 Сброс прогресса
+                </button>
+            </div>
+        </div>
+        
+        <!-- ===== API ===== -->
+        <div class="demo-section">
+            <h3>🔧 API Методы <span class="count">в консоли</span></h3>
+            <div class="api-list">
+                <div class="api-item"><span class="method">say</span>(text, duration)</div>
+                <div class="api-item"><span class="method">setMood</span>(mood)</div>
+                <div class="api-item"><span class="method">celebrate</span>(type)</div>
+                <div class="api-item"><span class="method">visitDistrict</span>(name)</div>
+                <div class="api-item"><span class="method">showTooltip</span>(selector, tipKey)</div>
+                <div class="api-item"><span class="method">getState</span>()</div>
+                <div class="api-item"><span class="method">hide</span>() / <span class="method">show</span>()</div>
+            </div>
+        </div>
+        
+        <!-- ===== СТАТУС-БАР ===== -->
+        <div class="status-bar" id="status-bar">
+            <span class="info">●</span> Маруся готова к работе. 
+            Используй <span class="highlight">MarusyaAPI</span> в консоли для управления.
+        </div>
+        
+        <!-- ===== ФУТЕР ===== -->
+        <div style="text-align: center; margin-top: 20px; color: #999; font-size: 0.8rem;">
+            Модуль <strong>marusya</strong> — Разработчик 5
+        </div>
+        
+    </div>
+    
+    <!-- ============================================
+         ПОДКЛЮЧЕНИЕ МАРУСИ
+         ============================================ -->
+    
+    <!-- 1. Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+    
+    <!-- 2. Настройка путей -->
+    <script>
+        window.MARUSYA_ASSET_PATH = '../assets/img/marusya/';
+    </script>
+    
+    <!-- 3. Модули Маруси -->
+    <script src="../src/js/dialogues.js"></script>
+    <script src="../src/js/emotions.js"></script>
+    <script src="../src/js/speech.js"></script>
+    <script src="../src/js/tooltips.js"></script>
+    <script src="../src/js/celebrations.js"></script>
+    <script src="../src/js/Marusya.js"></script>
+    <script src="../src/js/main.js"></script>
+    
+    <!-- 4. Шаблон маскота (вставляем вручную для демо) -->
+    <div id="marusya-container">
+        <div id="marusya" class="marusya happy" role="button" tabindex="0" aria-label="Маруся - нажми для взаимодействия">
+            <div class="marusya-avatar-wrapper">
+                <img src="../assets/img/marusya/happy.svg" alt="Маруся" id="marusya-avatar" class="marusya-avatar" loading="lazy" width="90" height="90">
+                <div class="marusya-status" id="marusya-status" aria-hidden="true"></div>
+            </div>
+            <div id="marusya-speech" class="speech-bubble hidden" role="dialog" aria-label="Сообщение от Маруси" aria-live="polite">
+                <div class="speech-content">
+                    <span id="marusya-text" class="speech-text">Привет!</span>
+                    <div class="speech-actions">
+                        <button id="marusya-speak-btn" class="speak-btn" title="Озвучить текст" aria-label="Озвучить сообщение" type="button">🔊</button>
+                        <button id="marusya-close-btn" class="close-speech-btn" title="Закрыть сообщение" aria-label="Закрыть сообщение" type="button">✕</button>
+                    </div>
+                </div>
+                <div class="speech-tail" aria-hidden="true"></div>
+            </div>
+            <div class="marusya-actions" aria-hidden="true">
+                <button id="marusya-hide" class="marusya-action-btn" title="Спрятать Марусю" aria-label="Спрятать Марусю" type="button">🙈</button>
+            </div>
+        </div>
+        <div id="marusya-menu" class="marusya-menu hidden" role="menu" aria-label="Меню Маруси">
+            <ul>
+                <li><button data-action="help" role="menuitem" type="button">❓ Помощь</button></li>
+                <li><button data-action="reset" role="menuitem" type="button">🔄 Сбросить прогресс</button></li>
+                <li><button data-action="settings" role="menuitem" type="button">⚙️ Настройки</button></li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- ============================================
+         ДЕМО-ФУНКЦИИ
+         ============================================ -->
+    
+    <script>
+        /**
+         * Обновить статус-бар
+         */
+        function updateStatus(message, type = 'info') {
+            const bar = document.getElementById('status-bar');
+            const colors = {
+                info: '#17A2B8',
+                success: '#4A7C59',
+                warning: '#E08D3C',
+                error: '#CC0000'
+            };
+            bar.innerHTML = `<span style="color: ${colors[type] || '#17A2B8'}">●</span> ${message}`;
+        }
+        
+        /**
+         * Демо-функции
+         */
+        function sayHello() {
+            MarusyaAPI.say('Привет! Я рада тебя видеть! 😊', 3000);
+            updateStatus('Сказано приветствие', 'info');
+        }
+        
+        function setHappy() {
+            MarusyaAPI.setMood('happy');
+            MarusyaAPI.say('Я счастлива! 🌟', 2000);
+            updateStatus('Эмоция: Счастливая', 'success');
+        }
+        
+        function setSad() {
+            MarusyaAPI.setMood('sad');
+            MarusyaAPI.say('Мне немного грустно... 🥺', 2000);
+            setTimeout(() => {
+                MarusyaAPI.setMood('happy');
+                updateStatus('Вернулась в счастливое состояние', 'info');
+            }, 2500);
+            updateStatus('Эмоция: Грустная', 'warning');
+        }
+        
+        function celebrate() {
+            MarusyaAPI.setMood('celebrate');
+            MarusyaAPI.celebrate('full');
+            MarusyaAPI.say('Ура! Празднуем! 🎉', 3000);
+            updateStatus('🎉 Празднование запущено!', 'success');
+        }
+        
+        function visitDistrict() {
+            const districts = ['Ливенский', 'Мценский', 'Болховский', 'Орловский', 'Кромской'];
+            const name = districts[Math.floor(Math.random() * districts.length)];
+            MarusyaAPI.visitDistrict(name);
+            updateStatus(`Посещён район: ${name}`, 'info');
+        }
+        
+        function toggleSound() {
+            const state = MarusyaAPI.getState();
+            MarusyaAPI.say(state.soundEnabled ? '🔇 Звук выключен' : '🔊 Звук включён', 2000);
+            updateStatus(state.soundEnabled ? 'Звук выключен' : 'Звук включён', 'warning');
+        }
+        
+        function triggerEvent(type) {
+            const events = {
+                'districtComplete': { name: 'Ливенский', id: 12 },
+                'gameWin': { game: 'Викторина', score: 100 },
+                'achievementUnlocked': { name: 'Первый район', type: 'district' },
+                'progressReset': {}
+            };
+            
+            const detail = events[type] || {};
+            document.dispatchEvent(new CustomEvent(type, { detail }));
+            
+            const messages = {
+                'districtComplete': '✅ Район завершён!',
+                'gameWin': '🎮 Победа в игре!',
+                'achievementUnlocked': '🏅 Получено достижение!',
+                'progressReset': '🔄 Прогресс сброшен!'
+            };
+            
+            updateStatus(messages[type] || `Событие: ${type}`, 'info');
+        }
+        
+        // ============================================
+        //  АВТОМАТИЧЕСКИЕ ТЕСТЫ ПРИ ЗАГРУЗКЕ
+        // ============================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🐻 Демо-страница Маруси загружена!');
+            console.log('📚 Доступные функции:');
+            console.log('  - sayHello()');
+            console.log('  - setHappy()');
+            console.log('  - setSad()');
+            console.log('  - celebrate()');
+            console.log('  - visitDistrict()');
+            console.log('  - toggleSound()');
+            console.log('  - triggerEvent(type)');
+            console.log('');
+            console.log('🔧 API: window.MarusyaAPI');
+            console.log('📖 Документация: docs/api.md');
+            
+            updateStatus('Маруся готова! Нажми на неё или используй кнопки', 'success');
+            
+            // Маленький тест через 2 секунды
+            setTimeout(() => {
+                MarusyaAPI.say('Привет! Я готова к путешествию! 🗺️', 4000);
+            }, 1500);
+        });
+    </script>
+    
+</body>
+</html>
