@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_verify()) {
 
 include __DIR__ . '/templates/header.php';
 ?>
-<main class="auth-page">
+<main id="main" class="auth-page">
     <h1>Новый пароль</h1>
     <?php foreach ($errors as $err): ?>
         <div class="alert alert--error"><?= e($err) ?></div>

@@ -1,44 +1,28 @@
 <?php
 /**
- * Подключение к базе данных (PDO Singleton)
+ * db.php
+ * Единая точка получения PDO-подключения.
  */
 
-class Database
+function db(): PDO
 {
-    private static ?PDO $instance = null;
+    static $pdo = null;
 
-    public static function getInstance(): PDO
-    {
-        if (self::$instance === null) {
-            $dsn = sprintf(
-                'mysql:host=%s;dbname=%s;charset=%s',
-                DB_HOST, DB_NAME, DB_CHARSET
-            );
-            $options = [
+    if ($pdo === null) {
+        $dsn = sprintf('mysql:host=%s;dbname=%s;charset=%s', DB_HOST, DB_NAME, DB_CHARSET);
+        try {
+            $pdo = new PDO($dsn, DB_USER, DB_PASS, [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES   => false,
-            ];
-            try {
-                self::$instance = new PDO($dsn, DB_USER, DB_PASS, $options);
-            } catch (PDOException $e) {
-                if (DEBUG) {
-                    die('Ошибка подключения к БД: ' . $e->getMessage());
-                }
-                die('Ошибка подключения к базе данных.');
+            ]);
+        } catch (PDOException $e) {
+            if (defined('APP_DEBUG') && APP_DEBUG) {
+                die('Ошибка подключения к БД: ' . $e->getMessage());
             }
+            die('Сервис временно недоступен. Попробуйте позже.');
         }
-        return self::$instance;
     }
 
-    // Запрет клонирования
-    private function __clone() {}
-}
-
-/**
- * Глобальная функция для получения соединения
- */
-function db(): PDO
-{
-    return Database::getInstance();
+    return $pdo;
 }

@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_verify()) {
 
 include __DIR__ . '/templates/header.php';
 ?>
-<main class="auth-page">
+<main id="main" class="auth-page">
     <h1>Восстановление пароля</h1>
     <?php if ($sent): ?>
         <div class="alert alert--success">

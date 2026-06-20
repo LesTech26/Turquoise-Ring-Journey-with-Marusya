@@ -1,74 +1,72 @@
 <?php
-define('BASE_PATH', dirname(__DIR__));
-require_once dirname(__DIR__) . '/includes/config.php';
-require_once dirname(__DIR__) . '/includes/db.php';
-require_once dirname(__DIR__) . '/includes/functions.php';
-require_once dirname(__DIR__) . '/includes/auth.php';
+/**
+ * admin/index.php
+ * Дашборд: ключевые цифры и быстрые ссылки.
+ */
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/auth.php';
+requireRole('admin', 'editor');
 
-requireAdmin();
+$adminTitle  = 'Дашборд';
+$adminActive = 'dashboard';
 
-// Статистика для дашборда
-$stats = [];
+$stats = [
+    'users'     => (int) db()->query('SELECT COUNT(*) FROM users')->fetchColumn(),
+    'districts' => (int) db()->query('SELECT COUNT(*) FROM districts WHERE is_active = 1')->fetchColumn(),
+    'games'     => (int) db()->query('SELECT COUNT(*) FROM game_history')->fetchColumn(),
+    'completed' => (int) db()->query('SELECT COUNT(*) FROM user_progress WHERE is_completed = 1')->fetchColumn(),
+];
 
-$stats['users']     = db()->query('SELECT COUNT(*) FROM users')->fetchColumn();
-$stats['districts'] = db()->query('SELECT COUNT(*) FROM districts')->fetchColumn();
-$stats['completed'] = db()->query('SELECT COUNT(*) FROM user_progress WHERE is_completed = 1')->fetchColumn();
-$stats['games']     = db()->query('SELECT COUNT(*) FROM game_history')->fetchColumn();
-
-// Популярные районы (топ-5)
-$popularDistricts = db()->query(
-    'SELECT d.name, COUNT(up.id) AS visits
-     FROM districts d
-     LEFT JOIN user_progress up ON d.id = up.district_id
-     GROUP BY d.id
-     ORDER BY visits DESC
-     LIMIT 5'
-)->fetchAll();
-
-// Активность пользователей за последние 7 дней
-$recentActivity = db()->query(
-    'SELECT DATE(played_at) AS day, COUNT(*) AS count
-     FROM game_history
-     WHERE played_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
-     GROUP BY DATE(played_at)
-     ORDER BY day ASC'
-)->fetchAll();
-
-include dirname(__DIR__) . '/templates/admin/header.php';
+ob_start();
 ?>
-
-<h1 class="admin-title">Дашборд</h1>
-
-<div class="stats-grid">
+<div class="stat-grid">
     <div class="stat-card">
-        <span class="stat-value"><?= e($stats['users']) ?></span>
-        <span class="stat-label">Пользователей</span>
+        <span class="stat-card__value"><?= $stats['users'] ?></span>
+        <span class="stat-card__label">Пользователей</span>
     </div>
     <div class="stat-card">
-        <span class="stat-value"><?= e($stats['districts']) ?></span>
-        <span class="stat-label">Районов</span>
+        <span class="stat-card__value"><?= $stats['districts'] ?></span>
+        <span class="stat-card__label">Активных районов</span>
     </div>
     <div class="stat-card">
-        <span class="stat-value"><?= e($stats['completed']) ?></span>
-        <span class="stat-label">Пройдено районов</span>
+        <span class="stat-card__value"><?= $stats['games'] ?></span>
+        <span class="stat-card__label">Сыграно партий</span>
     </div>
     <div class="stat-card">
-        <span class="stat-value"><?= e($stats['games']) ?></span>
-        <span class="stat-label">Игр сыграно</span>
+        <span class="stat-card__value"><?= $stats['completed'] ?></span>
+        <span class="stat-card__label">Районов пройдено</span>
     </div>
 </div>
 
-<h2>Популярные районы</h2>
-<table class="admin-table">
-    <thead><tr><th>Район</th><th>Посещений</th></tr></thead>
-    <tbody>
-    <?php foreach ($popularDistricts as $d): ?>
-        <tr>
-            <td><?= e($d['name']) ?></td>
-            <td><?= e($d['visits']) ?></td>
-        </tr>
-    <?php endforeach; ?>
-    </tbody>
-</table>
-
-<?php include dirname(__DIR__) . '/templates/admin/footer.php'; ?>
+<div class="admin-table-wrap">
+    <table class="admin-table">
+        <thead><tr><th>Раздел</th><th>Описание</th><th></th></tr></thead>
+        <tbody>
+            <tr>
+                <td>Районы</td>
+                <td>Добавление и редактирование районов, гербов, сортировки</td>
+                <td><a href="<?= BASE_URL ?>/admin/districts" class="btn btn--sm">Перейти</a></td>
+            </tr>
+            <tr>
+                <td>Контент</td>
+                <td>Описания, легенды, костюмы — WYSIWYG-редактирование</td>
+                <td><a href="<?= BASE_URL ?>/admin/content" class="btn btn--sm">Перейти</a></td>
+            </tr>
+            <tr>
+                <td>Пользователи</td>
+                <td>Список пользователей, роли, блокировка</td>
+                <td><a href="<?= BASE_URL ?>/admin/users" class="btn btn--sm">Перейти</a></td>
+            </tr>
+            <tr>
+                <td>Статистика</td>
+                <td>Общие показатели вовлечённости</td>
+                <td><a href="<?= BASE_URL ?>/admin/stats" class="btn btn--sm">Перейти</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<?php
+$adminBody = ob_get_clean();
+require __DIR__ . '/_layout.php';

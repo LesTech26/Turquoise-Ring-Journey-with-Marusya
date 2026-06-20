@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 include __DIR__ . '/templates/header.php';
 ?>
-<main class="auth-page">
+<main id="main" class="auth-page">
     <h1>Регистрация</h1>
     <?php foreach ($errors as $err): ?>
         <div class="alert alert--error"><?= e($err) ?></div>

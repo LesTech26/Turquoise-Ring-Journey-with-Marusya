@@ -132,7 +132,7 @@ $gameHistory = $gameHistory->fetchAll();
 include __DIR__ . '/templates/header.php';
 ?>
 
-<main class="profile">
+<main id="main" class="profile">
     <h1>Личный кабинет</h1>
 
     <?php foreach (getFlash() as $f): ?>
