@@ -12,6 +12,8 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!csrf_verify()) {
         $errors[] = 'Ошибка безопасности.';
+    } elseif (empty($_POST['consent_pd'])) {
+        $errors[] = 'Для регистрации необходимо согласиться с политикой обработки персональных данных.';
     } else {
         $result = Auth::register(
             trim($_POST['username'] ?? ''),
@@ -38,6 +40,14 @@ include __DIR__ . '/templates/header.php';
         <label>Имя пользователя <input type="text" name="username" required autocomplete="username"></label>
         <label>Email <input type="email" name="email" required autocomplete="email"></label>
         <label>Пароль <input type="password" name="password" required autocomplete="new-password"></label>
+        <label class="consent-checkbox">
+            <input type="checkbox" name="consent_pd" value="1" required>
+            <span>
+                Я согласен(на) с
+                <a href="<?= BASE_URL ?>/privacy-policy" class="inline-link" target="_blank" rel="noopener">политикой обработки персональных данных</a>
+                и даю согласие на обработку моих персональных данных.
+            </span>
+        </label>
         <button type="submit" class="btn btn--primary">Зарегистрироваться</button>
         <p><a href="<?= BASE_URL ?>/login">Уже есть аккаунт?</a></p>
     </form>

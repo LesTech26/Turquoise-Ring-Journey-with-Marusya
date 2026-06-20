@@ -29,6 +29,7 @@ if (!function_exists('e')) {
             <a href="<?= BASE_URL ?>/media">Медиатека</a>
             <a href="<?= BASE_URL ?>/about">О проекте</a>
             <a href="<?= BASE_URL ?>/contacts">Контакты</a>
+            <a href="<?= BASE_URL ?>/privacy-policy">Персональные данные</a>
         </nav>
 
         <div class="site-footer__social">

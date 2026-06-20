@@ -159,7 +159,7 @@ include __DIR__ . '/templates/header.php';
             <label>Аватар
                 <input type="file" name="avatar" accept="image/*">
                 <?php if (!empty($user['avatar'])): ?>
-                    <img src="<?= e(UPLOAD_URL . $user['avatar']) ?>" height="60" alt="Аватар" class="avatar">
+                    <img src="<?= e(UPLOAD_URL . $user['avatar']) ?>" alt="Аватар" class="avatar">
                 <?php endif; ?>
             </label>
             <button type="submit" class="btn btn--primary">Сохранить</button>

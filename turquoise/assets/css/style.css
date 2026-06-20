@@ -745,10 +745,15 @@ input:focus, textarea:focus, select:focus {
     font-size: 0.92rem;
 }
 .profile__info .avatar {
+    display: block;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
     margin-top: 8px;
     border: 3px solid var(--color-gold);
     object-fit: cover;
+    object-position: center;
+    background: var(--color-cream);
 }
 
 /* Прогресс-бар */
@@ -818,6 +823,50 @@ input:focus, textarea:focus, select:focus {
 }
 .page-static h1 { margin-bottom: 0.5em; }
 .page-static p { color: var(--color-walnut-dark); }
+
+.policy-download {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-block: 24px 32px;
+}
+.policy-summary {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: 24px 26px;
+    border: 2px solid var(--color-turquoise-light);
+    margin-bottom: 28px;
+}
+.policy-summary ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.policy-summary li {
+    padding-left: 1.6em;
+    position: relative;
+    color: var(--color-walnut-dark);
+    font-size: 0.95rem;
+}
+.policy-summary li::before {
+    content: "🧵";
+    position: absolute;
+    left: 0;
+}
+
+.consent-checkbox {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    font-weight: 500 !important;
+    font-size: 0.85rem !important;
+    color: var(--color-walnut-dark) !important;
+    line-height: 1.4;
+}
+.consent-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: var(--color-turquoise);
+}
 
 /* ============================================================
    14. Страница 404
@@ -1258,10 +1307,22 @@ input:focus, textarea:focus, select:focus {
     .main-nav__list { flex-direction: column; gap: 4px; }
     .main-nav__link { display: block; padding: 14px 18px; font-size: 1.05rem; }
 
-    .header-account .btn--ghost { display: none; }
+    .header-account { gap: 6px; flex-shrink: 0; }
+    .header-account .btn { padding: 0.5em 0.9em; font-size: 0.8rem; white-space: nowrap; }
     .account-menu__name { display: none; }
+    .account-menu__trigger { padding: 4px 8px 4px 4px; }
+    .account-menu__dropdown {
+        right: -8px;
+        min-width: 160px;
+    }
 
-    .site-header__inner { gap: 12px; }
+    .site-header { --header-height: 64px; }
+    .site-header__inner { gap: 6px; height: var(--header-height); }
+    .logo__subtitle { display: none; }
+    .logo__title { font-size: 1.05rem; }
+    .logo__mark svg { width: 32px; height: 32px; }
+
+    .main-nav { inset: var(--header-height) 0 0 0; }
 
     /* Карточки районов: 1 колонка на самых узких экранах */
     .district-grid { grid-template-columns: 1fr; }
@@ -1311,4 +1372,18 @@ input:focus, textarea:focus, select:focus {
 @media (max-width: 480px) {
     .stat-grid { grid-template-columns: 1fr; }
     .district-page__hero .container { flex-direction: column; text-align: center; }
+}
+
+@media (max-width: 380px) {
+    .logo__title { font-size: 0.95rem; }
+    .header-account .btn { padding: 0.45em 0.7em; font-size: 0.75rem; }
+    .burger { width: 32px; }
+    .hero__actions { flex-direction: column; align-items: stretch; }
+    .hero__actions .btn { width: 100%; text-align: center; }
+}
+
+/* Защита от горизонтального скролла на любых мобильных ширинах */
+@media (max-width: 767px) {
+    html, body { overflow-x: hidden; width: 100%; }
+    img, svg { max-width: 100%; height: auto; }
 }

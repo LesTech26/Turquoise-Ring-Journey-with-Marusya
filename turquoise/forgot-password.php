@@ -27,5 +27,9 @@ include __DIR__ . '/templates/header.php';
         </form>
     <?php endif; ?>
     <p><a href="<?= BASE_URL ?>/login">Вернуться ко входу</a></p>
+    <p style="font-size:0.82rem; opacity:0.75;">
+        Обработка email осуществляется согласно
+        <a href="<?= BASE_URL ?>/privacy-policy" class="inline-link">политике обработки персональных данных</a>.
+    </p>
 </main>
 <?php include __DIR__ . '/templates/footer.php'; ?>

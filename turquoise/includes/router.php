@@ -29,6 +29,7 @@ class Router
         'profile'          => 'profile.php',
         'forgot-password'  => 'forgot-password.php',
         'reset-password'   => 'reset-password.php',
+        'privacy-policy'   => 'privacy-policy.php',
     ];
 
     public function dispatch(): void
