@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `user_progress` (
     `is_completed`     BOOLEAN   NOT NULL DEFAULT FALSE,
     `quiz_score`       INT       NOT NULL DEFAULT 0,
     `collected_costume` BOOLEAN  NOT NULL DEFAULT FALSE,
-    `completed_at`     TIMESTAMP DEFAULT NULL,
+    `completed_at`     DATETIME DEFAULT NULL,
     `updated_at`       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (`user_id`)     REFERENCES `users`(`id`)     ON DELETE CASCADE,
     FOREIGN KEY (`district_id`) REFERENCES `districts`(`id`) ON DELETE CASCADE,
