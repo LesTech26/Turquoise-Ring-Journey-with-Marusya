@@ -35,14 +35,6 @@ mascot_interactive/
 <script src="/mascot_interactive/src/js/main.js" defer></script>
 ```
 
-## 🎯 Возможности
-
-- 5 эмоций: happy, sad, thinking, surprised, celebrate
-- Голосовое озвучивание (Web Speech API)
-- Всплывающие подсказки
-- Анимации побед (конфетти, звёзды)
-- Адаптивность (Desktop, Tablet, Mobile)
-
 ## 📝 Использование API
 
 ```javascript
