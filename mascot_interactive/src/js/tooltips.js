@@ -1,7 +1,8 @@
 /**
+ * tooltips.js
  * Система всплывающих подсказок
- * Показывает тултипы с текстом у указанных элементов
  */
+
 class MarusyaTooltips {
     constructor(marusya) {
         this.marusya = marusya;
@@ -9,16 +10,12 @@ class MarusyaTooltips {
         this.tooltipTimeout = null;
         this.isTourActive = false;
         
-        // Создаём элемент для подсказки, если его нет
         this.tooltipElement = document.getElementById('marusya-tooltip');
         if (!this.tooltipElement) {
             this.createTooltipElement();
         }
     }
     
-    /**
-     * Создать элемент для подсказки
-     */
     createTooltipElement() {
         const tooltip = document.createElement('div');
         tooltip.id = 'marusya-tooltip';
@@ -33,18 +30,11 @@ class MarusyaTooltips {
         document.body.appendChild(tooltip);
         this.tooltipElement = tooltip;
         
-        // Обработчик закрытия
         tooltip.querySelector('.tooltip-close').addEventListener('click', () => {
             this.hide();
         });
     }
     
-    /**
-     * Показать подсказку для элемента
-     * @param {HTMLElement} element - Целевой элемент
-     * @param {string} text - Текст подсказки
-     * @param {Object} options - Дополнительные опции
-     */
     show(element, text, options = {}) {
         const {
             position = 'top',
@@ -62,11 +52,7 @@ class MarusyaTooltips {
         }
     }
     
-    /**
-     * Внутренний метод показа подсказки
-     */
     _showTooltip(element, text, position, duration, highlight) {
-        // Очищаем старый таймер
         if (this.tooltipTimeout) {
             clearTimeout(this.tooltipTimeout);
         }
@@ -78,17 +64,14 @@ class MarusyaTooltips {
         textEl.textContent = text;
         tooltip.classList.remove('hidden');
         
-        // Позиционирование
         this.positionTooltip(tooltip, rect, position);
         
-        // Подсветка элемента
         if (highlight) {
             element.classList.add('tooltip-highlight');
             element.style.position = 'relative';
             element.style.zIndex = '9998';
         }
         
-        // Авто-скрытие
         if (duration > 0) {
             this.tooltipTimeout = setTimeout(() => {
                 this.hide(element);
@@ -96,9 +79,6 @@ class MarusyaTooltips {
         }
     }
     
-    /**
-     * Позиционирование тултипа
-     */
     positionTooltip(tooltip, rect, position) {
         const tooltipRect = tooltip.getBoundingClientRect();
         let top, left;
@@ -126,7 +106,6 @@ class MarusyaTooltips {
                 left = rect.left + (rect.width - tooltipRect.width) / 2;
         }
         
-        // Проверка выхода за границы экрана
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
         
@@ -143,9 +122,6 @@ class MarusyaTooltips {
         tooltip.style.left = `${left}px`;
     }
     
-    /**
-     * Скрыть подсказку
-     */
     hide(element) {
         if (this.tooltipTimeout) {
             clearTimeout(this.tooltipTimeout);
@@ -154,7 +130,6 @@ class MarusyaTooltips {
         
         this.tooltipElement.classList.add('hidden');
         
-        // Убираем подсветку
         if (element) {
             element.classList.remove('tooltip-highlight');
             element.style.position = '';
@@ -162,9 +137,6 @@ class MarusyaTooltips {
         }
     }
     
-    /**
-     * Запустить тур по сайту
-     */
     startTour(steps) {
         if (this.isTourActive) return;
         this.isTourActive = true;
@@ -192,7 +164,6 @@ class MarusyaTooltips {
                 highlight: true
             });
             
-            // Переход к следующему шагу по клику
             const onNext = () => {
                 this.hide(element);
                 currentStep++;
@@ -205,9 +176,6 @@ class MarusyaTooltips {
         showStep();
     }
     
-    /**
-     * Предопределённые туры
-     */
     getTours() {
         return {
             main: [
@@ -216,16 +184,10 @@ class MarusyaTooltips {
                 { selector: '#marusya', text: 'А это я — Маруся! Я буду помогать тебе в путешествии! 👋', position: 'left' }
             ],
             district: [
-                { selector: '.district-title', text: 'Добро пожаловать в этот район! Узнай его историю! 📖', position: 'bottom' },
+                { selector: '.district-page__hero', text: 'Добро пожаловать в этот район! Узнай его историю! 📖', position: 'bottom' },
                 { selector: '.timeline', text: 'Здесь временная лента. Листай, чтобы узнать события! ⏳', position: 'top' },
-                { selector: '.costume-3d', text: 'Здесь ты можешь собрать традиционный костюм! 👗', position: 'top' },
-                { selector: '.quiz-container', text: 'А здесь — викторина! Проверь свои знания! ❓', position: 'top' }
+                { selector: '.district-page__section', text: 'Здесь ты можешь собрать традиционный костюм! 👗', position: 'top' }
             ]
         };
     }
-}
-
-// Экспорт для Node.js (тесты)
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = MarusyaTooltips;
 }
