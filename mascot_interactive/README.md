@@ -1,5 +1,3 @@
-## 📄 Файл 10: `mascot_interactive/README.md`
-
 # 🐻 mascot_interactive — Маскот и интерактив
 
 Интерактивный персонаж-гид Маруся для проекта  
