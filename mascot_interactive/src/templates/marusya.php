@@ -8,7 +8,34 @@
  * <?php include_once __DIR__ . '/../../mascot_interactive/src/templates/marusya.php'; ?>
  */
 
-// Путь к модулю
+// ============================================
+// ПОДКЛЮЧЕНИЕ ФАЙЛОВ МИШИ (ИНТЕГРАЦИЯ)
+// ============================================
+
+// Путь к корню проекта (из mascot_interactive/src/templates/ поднимаемся на 2 уровня)
+$root = __DIR__ . '/../../';
+
+// 1. Подключаем config Миши
+require_once $root . 'turquoise/includes/config.php';
+
+// 2. Подключаем functions Миши (e(), csrf_field(), и т.д.)
+require_once $root . 'turquoise/includes/functions.php';
+
+// 3. Подключаем db Миши (если нужна БД)
+require_once $root . 'turquoise/includes/db.php';
+
+// 4. Подключаем auth Миши (если нужна авторизация)
+require_once $root . 'turquoise/includes/auth.php';
+
+// ============================================
+// ТЕПЕРЬ МОЖНО ИСПОЛЬЗОВАТЬ:
+// - BASE_URL из config.php
+// - e() из functions.php
+// - db() из db.php
+// - currentUser() из auth.php
+// ============================================
+
+// Путь к модулю (твоя папка)
 $marusya_path = '/mascot_interactive';
 ?>
 
