@@ -15,7 +15,7 @@ $__currentPath = trim((string) parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL
 
 $__navItems = [
     ''             => 'Карта',
-    'games'        => 'Игры',
+    'game'         => 'Игры',
     'achievements' => 'Достижения',
     'media'        => 'Медиатека',
     'about'        => 'О проекте',

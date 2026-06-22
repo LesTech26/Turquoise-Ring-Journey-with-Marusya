@@ -10,7 +10,7 @@ require_once __DIR__ . '/includes/auth.php';
 
 $pageTitle = 'Игры';
 
-$games = [
+$game = [
     ['slug' => 'quiz',     'icon' => '❓', 'title' => 'Викторина', 'desc' => 'Проверь знание легенд и фактов о районах.'],
     ['slug' => 'puzzle',   'icon' => '🧩', 'title' => 'Пазл',      'desc' => 'Собери герб района из частей.'],
     ['slug' => 'coloring', 'icon' => '🎨', 'title' => 'Раскраска', 'desc' => 'Раскрась элементы народного костюма.'],
@@ -23,7 +23,7 @@ require_once __DIR__ . '/templates/header.php';
     <p>Выбери игру и район, чтобы начать. Большинство игр доступно сразу со страницы района.</p>
 
     <div class="district-grid" style="margin-top:32px;">
-        <?php foreach ($games as $g): ?>
+        <?php foreach ($game as $g): ?>
             <article class="district-card">
                 <div class="district-card__medallion">
                     <span style="font-size:2.2rem;"><?= $g['icon'] ?></span>
