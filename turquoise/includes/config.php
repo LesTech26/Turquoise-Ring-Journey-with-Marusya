@@ -1,68 +1,58 @@
 <?php
 /**
- * Конфигурация проекта
- * «Путешествие по бирюзовому кольцу России»
+ * config.php
+ * Базовые константы окружения.
+ * Эти настройки нужно подправить под реальный сервер при деплое.
  */
+
 if (!defined('BASE_PATH')) {
-    define('BASE_PATH', dirname(__FILE__, 2));
-}
-// Режим отладки
-define('DEBUG', true);
-
-if (DEBUG) {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-} else {
-    error_reporting(0);
-    ini_set('display_errors', 0);
+    define('BASE_PATH', dirname(__DIR__));
 }
 
-// Базовый URL
-define('BASE_URL', 'http://localhost/turquoise');
+// --- Окружение -------------------------------------------------------
+define('APP_ENV', 'development'); // 'development' | 'production'
+define('APP_DEBUG', APP_ENV === 'development');
 
-// База данных
+// --- URL ---------------------------------------------------------------
+// Базовый префикс пути приложения (см. RewriteBase в .htaccess)
+define('BASE_URL', '/turquoise');
+define('UPLOAD_URL', BASE_URL . '/uploads/');
+define('UPLOAD_PATH', BASE_PATH . '/uploads/');
+
+// --- База данных ---------------------------------------------------------
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'turquoise_ring');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
 
-// Сессия
-define('SESSION_NAME', 'turquoise_session');
-define('SESSION_LIFETIME', 86400 * 30); // 30 дней
+// --- Безопасность --------------------------------------------------------
+define('HASH_COST', 12);
+define('REMEMBER_TOKEN_DAYS', 30);
+define('RESET_TOKEN_TTL_MIN', 60);
 
-// Загрузка файлов
-define('UPLOAD_DIR', BASE_PATH . '/assets/uploads/');
-define('UPLOAD_URL', BASE_URL . '/assets/uploads/');
-define('MAX_FILE_SIZE', 10 * 1024 * 1024); // 10 MB
-define('ALLOWED_IMAGE_TYPES', ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']);
-define('ALLOWED_MODEL_TYPES', ['model/gltf-binary', 'application/octet-stream']);
+// --- Загрузка файлов -----------------------------------------------------
+define('UPLOAD_MAX_SIZE', 10 * 1024 * 1024); // 10 МБ
+define('UPLOAD_ALLOWED_MIME', ['image/jpeg', 'image/png', 'image/webp']);
 
-// Безопасность
-define('CSRF_TOKEN_NAME', 'csrf_token');
-define('HASH_COST', 12); // bcrypt cost
+// --- Вывод ошибок ----------------------------------------------------------
+if (APP_DEBUG) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+} else {
+    error_reporting(0);
+    ini_set('display_errors', '0');
+}
 
-// Email (восстановление пароля)
-define('MAIL_FROM', 'noreply@turquoise-ring.ru');
-define('MAIL_FROM_NAME', 'Бирюзовое кольцо');
-define('MAIL_HOST', 'smtp.example.com');
-define('MAIL_PORT', 587);
-define('MAIL_USER', '');
-define('MAIL_PASS', '');
+// --- Сессия ------------------------------------------------------------
+if (session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path'     => BASE_URL . '/',
+        'httponly' => true,
+        'samesite' => 'Lax',
+    ]);
+    session_start();
+}
 
-// Пагинация
-define('ITEMS_PER_PAGE', 20);
-
-// Запуск сессии
-session_name(SESSION_NAME);
-session_set_cookie_params([
-    'lifetime' => SESSION_LIFETIME,
-    'path'     => '/',
-    'secure'   => false,
-    'httponly' => true,
-    'samesite' => 'Lax',
-]);
-session_start();
-
-// Временная зона
 date_default_timezone_set('Europe/Moscow');

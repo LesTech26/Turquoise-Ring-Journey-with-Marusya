@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_verify()) {
 
 include __DIR__ . '/templates/header.php';
 ?>
-<main class="auth-page">
+<main id="main" class="auth-page">
     <h1>Восстановление пароля</h1>
     <?php if ($sent): ?>
         <div class="alert alert--success">
@@ -27,5 +27,9 @@ include __DIR__ . '/templates/header.php';
         </form>
     <?php endif; ?>
     <p><a href="<?= BASE_URL ?>/login">Вернуться ко входу</a></p>
+    <p style="font-size:0.82rem; opacity:0.75;">
+        Обработка email осуществляется согласно
+        <a href="<?= BASE_URL ?>/privacy-policy" class="inline-link">политике обработки персональных данных</a>.
+    </p>
 </main>
 <?php include __DIR__ . '/templates/footer.php'; ?>

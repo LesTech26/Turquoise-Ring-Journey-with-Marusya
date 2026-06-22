@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 include __DIR__ . '/templates/header.php';
 ?>
-<main class="auth-page">
+<main id="main" class="auth-page">
     <h1>Вход</h1>
     <?php if ($error): ?><div class="alert alert--error"><?= e($error) ?></div><?php endif; ?>
     <form method="POST" class="auth-form">

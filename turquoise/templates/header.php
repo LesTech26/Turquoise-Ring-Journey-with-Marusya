@@ -1,28 +1,115 @@
+<?php
+/**
+ * templates/header.php
+ * Общая шапка сайта: логотип, навигация, профиль/вход, мобильное меню.
+ */
+if (!defined('BASE_PATH')) {
+    require_once __DIR__ . '/../includes/config.php';
+    require_once __DIR__ . '/../includes/db.php';
+    require_once __DIR__ . '/../includes/functions.php';
+    require_once __DIR__ . '/../includes/auth.php';
+}
+
+$__user = currentUser();
+$__currentPath = trim((string) parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH), '/');
+
+$__navItems = [
+    ''             => 'Карта',
+    'game'         => 'Игры',
+    'achievements' => 'Достижения',
+    'media'        => 'Медиатека',
+    'about'        => 'О проекте',
+];
+
+function nav_is_active(string $key, string $current): string
+{
+    $current = preg_replace('#^turquoise/#', '', $current);
+    if ($key === '') {
+        return $current === '' ? ' is-active' : '';
+    }
+    return ($current === $key || str_starts_with($current, $key . '/')) ? ' is-active' : '';
+}
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Бирюзовое кольцо России</title>
+    <title><?= isset($pageTitle) ? e($pageTitle) . ' — ' : '' ?>Бирюзовое кольцо России</title>
+    <meta name="description" content="Интерактивное путешествие по районам Орловской области: легенды, костюмы, викторины и игры.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500;600;700&family=Comfortaa:wght@400;500;700&family=Lobster&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
+    <?php if (!empty($extraStyles)): foreach ($extraStyles as $href): ?>
+        <link rel="stylesheet" href="<?= e($href) ?>">
+    <?php endforeach; endif; ?>
 </head>
-<body>
+<body class="<?= e($bodyClass ?? '') ?>">
+
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+
 <header class="site-header">
-    <a href="<?= BASE_URL ?>/" class="site-logo">Бирюзовое кольцо</a>
-    <nav class="site-nav">
-        <a href="<?= BASE_URL ?>/games">Игры</a>
-        <a href="<?= BASE_URL ?>/achievements">Достижения</a>
-        <a href="<?= BASE_URL ?>/media">Медиатека</a>
-        <a href="<?= BASE_URL ?>/about">О проекте</a>
-        <?php if (isLoggedIn()): ?>
-            <a href="<?= BASE_URL ?>/profile"><?= e(currentUser()['username']) ?></a>
-            <?php if (hasRole('admin')): ?>
-                <a href="<?= BASE_URL ?>/admin">Админ</a>
+    <div class="site-header__inner container">
+
+        <a href="<?= BASE_URL ?>/" class="logo">
+            <span class="logo__mark" aria-hidden="true">
+                <svg viewBox="0 0 48 48" width="40" height="40" focusable="false">
+                    <circle cx="24" cy="24" r="21" fill="var(--color-turquoise)"/>
+                    <path d="M24 8c5 6 10 9 10 16a10 10 0 1 1-20 0c0-7 5-10 10-16Z" fill="var(--color-cream)"/>
+                    <circle cx="24" cy="26" r="4.5" fill="var(--color-gold)"/>
+                </svg>
+            </span>
+            <span class="logo__text">
+                <span class="logo__title">Бирюзовое кольцо</span>
+                <span class="logo__subtitle">Орловская область</span>
+            </span>
+        </a>
+
+        <nav class="main-nav" id="main-nav" aria-label="Основная навигация">
+            <ul class="main-nav__list">
+                <?php foreach ($__navItems as $key => $label): ?>
+                    <li>
+                        <a href="<?= BASE_URL ?>/<?= e($key) ?>"
+                           class="main-nav__link<?= nav_is_active($key, $__currentPath) ?>">
+                            <?= e($label) ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </nav>
+
+        <div class="header-account">
+            <?php if ($__user): ?>
+                <div class="account-menu">
+                    <button type="button" class="account-menu__trigger" id="accountMenuTrigger" aria-haspopup="true" aria-expanded="false">
+                        <?php if (!empty($__user['avatar'])): ?>
+                            <img src="<?= e(UPLOAD_URL . $__user['avatar']) ?>" alt="" class="account-menu__avatar">
+                        <?php else: ?>
+                            <span class="account-menu__avatar account-menu__avatar--placeholder">
+                                <?= e(mb_substr($__user['username'] ?? '?', 0, 1)) ?>
+                            </span>
+                        <?php endif; ?>
+                        <span class="account-menu__name"><?= e($__user['username']) ?></span>
+                    </button>
+                    <div class="account-menu__dropdown" id="accountMenuDropdown">
+                        <a href="<?= BASE_URL ?>/profile">Личный кабинет</a>
+                        <?php if (($__user['role'] ?? '') === 'admin'): ?>
+                            <a href="<?= BASE_URL ?>/admin">Админ-панель</a>
+                        <?php endif; ?>
+                        <a href="<?= BASE_URL ?>/logout">Выйти</a>
+                    </div>
+                </div>
+            <?php else: ?>
+                <a href="<?= BASE_URL ?>/login" class="btn btn--ghost">Вход</a>
+                <a href="<?= BASE_URL ?>/register" class="btn btn--primary btn--sm">Регистрация</a>
             <?php endif; ?>
-            <a href="<?= BASE_URL ?>/logout">Выйти</a>
-        <?php else: ?>
-            <a href="<?= BASE_URL ?>/login">Войти</a>
-            <a href="<?= BASE_URL ?>/register">Регистрация</a>
-        <?php endif; ?>
-    </nav>
+        </div>
+
+        <button type="button" class="burger" id="burgerBtn" aria-expanded="false" aria-controls="main-nav" aria-label="Открыть меню">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
 </header>
