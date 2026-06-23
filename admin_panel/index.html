@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Админ-панель | Бирюзовое кольцо России</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Навигация админ-панели">
+        <button class="brand" id="brandButton" type="button" aria-label="Логотип приложения">
+          <span class="brand-mark">БК</span>
+          <span>
+            <strong>Бирюзовое кольцо</strong>
+            <small>Админ-панель</small>
+          </span>
+        </button>
+
+        <nav class="nav-list" aria-label="Разделы">
+          <button class="nav-link active" type="button" data-view="dashboard">Статистика</button>
+          <button class="nav-link" type="button" data-view="districts">Районы</button>
+          <button class="nav-link" type="button" data-view="costumes">Костюмы</button>
+          <button class="nav-link" type="button" data-view="questions">Викторина</button>
+          <button class="nav-link" type="button" data-view="exchange">JSON</button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <span class="status-dot"></span>
+          <span>Локальная база</span>
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Контент приложения</p>
+            <h1 id="viewTitle">Статистика</h1>
+          </div>
+          <div class="topbar-actions">
+            <button class="ghost-button" id="resetProgressButton" type="button">Сбросить прогресс</button>
+            <button class="primary-button" id="quickExportButton" type="button">Экспорт JSON</button>
+          </div>
+        </header>
+
+        <section class="view active" id="dashboardView" aria-labelledby="dashboardHeading">
+          <h2 id="dashboardHeading" class="sr-only">Статистика пользователей</h2>
+          <div class="metric-grid" id="metricGrid"></div>
+
+          <div class="split-layout">
+            <section class="panel">
+              <div class="section-heading">
+                <h3>Активность пользователей</h3>
+                <span id="statsPeriod">Последние 30 дней</span>
+              </div>
+              <div class="chart" id="activityChart" aria-label="График активности"></div>
+            </section>
+
+            <section class="panel">
+              <div class="section-heading">
+                <h3>Лучшие результаты</h3>
+                <span id="bestScoreLabel"></span>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Пользователь</th>
+                      <th>Районы</th>
+                      <th>Средний балл</th>
+                      <th>Последний вход</th>
+                    </tr>
+                  </thead>
+                  <tbody id="usersTable"></tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="districtsView" aria-labelledby="districtsHeading">
+          <div class="workspace-grid">
+            <section class="list-panel">
+              <div class="section-heading">
+                <h2 id="districtsHeading">Районы</h2>
+                <button class="icon-button" id="addDistrictButton" type="button" aria-label="Добавить район">+</button>
+              </div>
+              <input class="search-input" id="districtSearch" type="search" placeholder="Поиск района" />
+              <div class="item-list" id="districtList"></div>
+            </section>
+
+            <section class="editor-panel">
+              <form id="districtForm">
+                <div class="editor-header">
+                  <div>
+                    <p class="eyebrow">Редактирование контента</p>
+                    <h2 id="districtEditorTitle">Район</h2>
+                  </div>
+                  <div class="button-row">
+                    <button class="danger-button" id="deleteDistrictButton" type="button">Удалить</button>
+                    <button class="primary-button" type="submit">Сохранить</button>
+                  </div>
+                </div>
+
+                <div class="form-grid">
+                  <label>
+                    Название
+                    <input id="districtName" name="name" required />
+                  </label>
+                  <label>
+                    Название для озвучивания
+                    <input id="districtAccentName" name="accentName" />
+                  </label>
+                  <label>
+                    Статус
+                    <select id="districtStatus" name="status">
+                      <option value="draft">Черновик</option>
+                      <option value="review">На проверке</option>
+                      <option value="published">Опубликовано</option>
+                    </select>
+                  </label>
+                  <label>
+                    Главное изображение
+                    <input id="districtHeroImage" name="heroImage" placeholder="assets/bolhov/hero.jpg" />
+                  </label>
+                </div>
+
+                <label>
+                  Краткая история
+                  <textarea id="districtHistory" name="history" rows="6"></textarea>
+                </label>
+
+                <div class="dynamic-block">
+                  <div class="section-heading">
+                    <h3>Факты</h3>
+                    <button class="secondary-button" id="addFactButton" type="button">Добавить факт</button>
+                  </div>
+                  <div class="stack" id="factsEditor"></div>
+                </div>
+
+                <div class="dynamic-block">
+                  <div class="section-heading">
+                    <h3>Изображения</h3>
+                    <button class="secondary-button" id="addImageButton" type="button">Добавить изображение</button>
+                  </div>
+                  <div class="stack" id="imagesEditor"></div>
+                </div>
+              </form>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="costumesView" aria-labelledby="costumesHeading">
+          <div class="workspace-grid">
+            <section class="list-panel">
+              <div class="section-heading">
+                <h2 id="costumesHeading">Элементы костюмов</h2>
+                <button class="icon-button" id="addCostumeButton" type="button" aria-label="Добавить элемент костюма">+</button>
+              </div>
+              <div class="item-list" id="costumeList"></div>
+            </section>
+
+            <section class="editor-panel">
+              <form id="costumeForm">
+                <div class="editor-header">
+                  <div>
+                    <p class="eyebrow">Карточка элемента</p>
+                    <h2 id="costumeEditorTitle">Костюм</h2>
+                  </div>
+                  <div class="button-row">
+                    <button class="danger-button" id="deleteCostumeButton" type="button">Удалить</button>
+                    <button class="primary-button" type="submit">Сохранить</button>
+                  </div>
+                </div>
+
+                <div class="form-grid">
+                  <label>
+                    Название
+                    <input id="costumeName" required />
+                  </label>
+                  <label>
+                    Район
+                    <select id="costumeDistrict"></select>
+                  </label>
+                  <label>
+                    Категория
+                    <select id="costumeCategory">
+                      <option>Головной убор</option>
+                      <option>Рубаха</option>
+                      <option>Пояс</option>
+                      <option>Сарафан</option>
+                      <option>Обувь</option>
+                      <option>Украшение</option>
+                    </select>
+                  </label>
+                  <label>
+                    Цвет
+                    <input id="costumeColor" type="color" value="#cc0000" />
+                  </label>
+                  <label>
+                    Изображение
+                    <input id="costumeImage" placeholder="assets/costumes/item.png" />
+                  </label>
+                  <label>
+                    3D-модель
+                    <input id="costumeModel" placeholder="assets/models/item.glb" />
+                  </label>
+                </div>
+
+                <label>
+                  Описание
+                  <textarea id="costumeDescription" rows="7"></textarea>
+                </label>
+              </form>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="questionsView" aria-labelledby="questionsHeading">
+          <div class="workspace-grid">
+            <section class="list-panel">
+              <div class="section-heading">
+                <h2 id="questionsHeading">Вопросы викторины</h2>
+                <button class="icon-button" id="addQuestionButton" type="button" aria-label="Добавить вопрос">+</button>
+              </div>
+              <select class="search-input" id="questionDistrictFilter"></select>
+              <div class="item-list" id="questionList"></div>
+            </section>
+
+            <section class="editor-panel">
+              <form id="questionForm">
+                <div class="editor-header">
+                  <div>
+                    <p class="eyebrow">Редактор вопроса</p>
+                    <h2 id="questionEditorTitle">Вопрос</h2>
+                  </div>
+                  <div class="button-row">
+                    <button class="danger-button" id="deleteQuestionButton" type="button">Удалить</button>
+                    <button class="primary-button" type="submit">Сохранить</button>
+                  </div>
+                </div>
+
+                <div class="form-grid">
+                  <label>
+                    Район
+                    <select id="questionDistrict"></select>
+                  </label>
+                  <label>
+                    Тип
+                    <select id="questionType">
+                      <option value="single">Один ответ</option>
+                      <option value="trueFalse">Правда/неправда</option>
+                    </select>
+                  </label>
+                  <label>
+                    Баллы
+                    <input id="questionPoints" type="number" min="1" max="20" value="5" />
+                  </label>
+                </div>
+
+                <label>
+                  Текст вопроса
+                  <textarea id="questionText" rows="4"></textarea>
+                </label>
+
+                <div class="dynamic-block">
+                  <div class="section-heading">
+                    <h3>Ответы</h3>
+                    <button class="secondary-button" id="addAnswerButton" type="button">Добавить ответ</button>
+                  </div>
+                  <div class="stack" id="answersEditor"></div>
+                </div>
+
+                <label>
+                  Пояснение
+                  <textarea id="questionExplanation" rows="4"></textarea>
+                </label>
+              </form>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="exchangeView" aria-labelledby="exchangeHeading">
+          <div class="exchange-layout">
+            <section class="panel">
+              <div class="section-heading">
+                <h2 id="exchangeHeading">Экспорт и импорт</h2>
+                <div class="button-row">
+                  <button class="secondary-button" id="copyJsonButton" type="button">Копировать</button>
+                  <button class="primary-button" id="downloadJsonButton" type="button">Скачать JSON</button>
+                </div>
+              </div>
+              <textarea id="jsonArea" class="json-area" spellcheck="false"></textarea>
+              <div class="button-row">
+                <label class="file-button">
+                  Импорт из файла
+                  <input id="importFileInput" type="file" accept="application/json,.json" />
+                </label>
+                <button class="secondary-button" id="importJsonButton" type="button">Загрузить из поля</button>
+                <button class="danger-button" id="restoreSeedButton" type="button">Вернуть пример</button>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="section-heading">
+                <h3>Состав данных</h3>
+              </div>
+              <div class="schema-list">
+                <span>districts</span>
+                <span>costumes</span>
+                <span>questions</span>
+                <span>users</span>
+                <span>activity</span>
+              </div>
+              <div class="preview-box" id="jsonPreview"></div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <div class="lock-screen" id="lockScreen" aria-labelledby="lockTitle">
+      <form class="lock-panel" id="lockForm">
+        <span class="brand-mark large">БК</span>
+        <h2 id="lockTitle">Вход в админ-панель</h2>
+        <label>
+          Кодовое слово
+          <input id="accessCode" type="password" autocomplete="current-password" />
+        </label>
+        <button class="primary-button" type="submit">Открыть</button>
+        <p class="lock-note">Демо-код: admin2026</p>
+      </form>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
