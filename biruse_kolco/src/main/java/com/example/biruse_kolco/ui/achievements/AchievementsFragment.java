@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.biruse_kolco.R;
+import com.example.trjwm.R;
 import com.example.biruse_kolco.model.MainViewModel;
 
 public class AchievementsFragment extends Fragment {

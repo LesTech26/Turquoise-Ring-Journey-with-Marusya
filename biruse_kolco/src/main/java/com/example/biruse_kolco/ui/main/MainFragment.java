@@ -1,7 +1,5 @@
 package com.example.biruse_kolco.ui.main;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
@@ -18,11 +16,13 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.biruse_kolco.R;
+import com.example.trjwm.R;
 import com.example.biruse_kolco.data.database.entities.District;
 import com.example.biruse_kolco.data.database.entities.User;
 import com.example.biruse_kolco.model.MainViewModel;
+import com.google.android.material.button.MaterialButton;
 
 public class MainFragment extends Fragment {
 
@@ -30,7 +30,8 @@ public class MainFragment extends Fragment {
     private TextView tvUserName, tvProgress, tvLevel;
     private TextView tvNextDistrict, tvProgressPercent;
     private View viewProgressBar;
-    private CardView cardContinue, cardMap, cardGames;
+    private CardView cardContinue, cardRoutePreview;
+    private MaterialButton btnTimeline, btnLibrary, btnGame;
     private View rootView;
 
     @Nullable
@@ -52,10 +53,11 @@ public class MainFragment extends Fragment {
         tvProgressPercent = view.findViewById(R.id.tv_progress_percent);
         viewProgressBar = view.findViewById(R.id.view_progress_bar);
         cardContinue = view.findViewById(R.id.card_continue);
-        cardMap = view.findViewById(R.id.card_map);
-        cardGames = view.findViewById(R.id.card_games);
+        cardRoutePreview = view.findViewById(R.id.card_route_preview);
+        btnTimeline = view.findViewById(R.id.btn_open_timeline);
+        btnLibrary = view.findViewById(R.id.btn_open_library);
+        btnGame = view.findViewById(R.id.btn_open_game);
 
-        // Скрываем элементы для анимации
         setViewsAlphaZero();
 
         viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
@@ -67,37 +69,30 @@ public class MainFragment extends Fragment {
         cardContinue.setOnClickListener(v -> {
             District next = viewModel.getNextDistrict().getValue();
             if (next != null) {
-                viewModel.completeDistrict(next.getId());
+                openDistrict(next.getId());
             }
         });
 
-        cardMap.setOnClickListener(v -> {
-            // TODO: Для Разработчика 2 - открыть карту
-        });
+        cardRoutePreview.setOnClickListener(v -> openDestination(R.id.mapFragment));
+        btnTimeline.setOnClickListener(v -> openDestination(R.id.timelineFragment));
+        btnLibrary.setOnClickListener(v -> openDestination(R.id.libraryFragment));
+        btnGame.setOnClickListener(v -> openDestination(R.id.gameFragment));
 
-        cardGames.setOnClickListener(v -> {
-            // TODO: Для Разработчика 4 - открыть игры
-        });
-
-        // Запускаем анимацию появления после небольшой задержки
         new Handler().postDelayed(this::startStaggeredAnimation, 300);
     }
 
     private void setViewsAlphaZero() {
-        // Шапка
         View header = rootView.findViewById(R.id.layout_header);
         if (header != null) header.setAlpha(0f);
-        // Карточка прогресса
         View cardProgress = rootView.findViewById(R.id.card_progress_main);
         if (cardProgress != null) cardProgress.setAlpha(0f);
-        // Кнопка продолжения
         cardContinue.setAlpha(0f);
-        // Быстрый доступ
-        View quickAccess = rootView.findViewById(R.id.tv_quick_access);
-        if (quickAccess != null) quickAccess.setAlpha(0f);
-        cardMap.setAlpha(0f);
-        cardGames.setAlpha(0f);
-        // Маскот
+        View routeLabel = rootView.findViewById(R.id.tv_route_label);
+        if (routeLabel != null) routeLabel.setAlpha(0f);
+        cardRoutePreview.setAlpha(0f);
+        btnTimeline.setAlpha(0f);
+        btnLibrary.setAlpha(0f);
+        btnGame.setAlpha(0f);
         View mascotLabel = rootView.findViewById(R.id.tv_mascot_label);
         if (mascotLabel != null) mascotLabel.setAlpha(0f);
         View cardMascot = rootView.findViewById(R.id.card_mascot);
@@ -108,57 +103,58 @@ public class MainFragment extends Fragment {
         AnimatorSet animSet = new AnimatorSet();
         animSet.setInterpolator(new AccelerateDecelerateInterpolator());
 
-        // Шапка
         View header = rootView.findViewById(R.id.layout_header);
         ObjectAnimator headerAnim = ObjectAnimator.ofFloat(header, "alpha", 0f, 1f);
         headerAnim.setDuration(600);
 
-        // Карточка прогресса
         View cardProgress = rootView.findViewById(R.id.card_progress_main);
         ObjectAnimator progressAnim = ObjectAnimator.ofFloat(cardProgress, "alpha", 0f, 1f);
         progressAnim.setDuration(600);
         progressAnim.setStartDelay(150);
 
-        // Кнопка продолжения
         ObjectAnimator continueAnim = ObjectAnimator.ofFloat(cardContinue, "alpha", 0f, 1f);
         continueAnim.setDuration(600);
         continueAnim.setStartDelay(300);
 
-        // Быстрый доступ
-        View quickAccess = rootView.findViewById(R.id.tv_quick_access);
-        ObjectAnimator quickAnim = ObjectAnimator.ofFloat(quickAccess, "alpha", 0f, 1f);
-        quickAnim.setDuration(500);
-        quickAnim.setStartDelay(450);
+        View routeLabel = rootView.findViewById(R.id.tv_route_label);
+        ObjectAnimator routeLabelAnim = ObjectAnimator.ofFloat(routeLabel, "alpha", 0f, 1f);
+        routeLabelAnim.setDuration(500);
+        routeLabelAnim.setStartDelay(450);
 
-        // Карта
-        ObjectAnimator mapAnim = ObjectAnimator.ofFloat(cardMap, "alpha", 0f, 1f);
-        mapAnim.setDuration(500);
-        mapAnim.setStartDelay(550);
+        ObjectAnimator routeCardAnim = ObjectAnimator.ofFloat(cardRoutePreview, "alpha", 0f, 1f);
+        routeCardAnim.setDuration(500);
+        routeCardAnim.setStartDelay(550);
 
-        // Игры
-        ObjectAnimator gamesAnim = ObjectAnimator.ofFloat(cardGames, "alpha", 0f, 1f);
-        gamesAnim.setDuration(500);
-        gamesAnim.setStartDelay(650);
+        ObjectAnimator timelineAnim = ObjectAnimator.ofFloat(btnTimeline, "alpha", 0f, 1f);
+        timelineAnim.setDuration(500);
+        timelineAnim.setStartDelay(650);
 
-        // Маскот - заголовок
+        ObjectAnimator libraryAnim = ObjectAnimator.ofFloat(btnLibrary, "alpha", 0f, 1f);
+        libraryAnim.setDuration(500);
+        libraryAnim.setStartDelay(750);
+
+        ObjectAnimator gameAnim = ObjectAnimator.ofFloat(btnGame, "alpha", 0f, 1f);
+        gameAnim.setDuration(500);
+        gameAnim.setStartDelay(850);
+
         View mascotLabel = rootView.findViewById(R.id.tv_mascot_label);
         ObjectAnimator mascotLabelAnim = ObjectAnimator.ofFloat(mascotLabel, "alpha", 0f, 1f);
         mascotLabelAnim.setDuration(500);
-        mascotLabelAnim.setStartDelay(750);
+        mascotLabelAnim.setStartDelay(950);
 
-        // Маскот - карточка
         View cardMascot = rootView.findViewById(R.id.card_mascot);
         ObjectAnimator mascotCardAnim = ObjectAnimator.ofFloat(cardMascot, "alpha", 0f, 1f);
         mascotCardAnim.setDuration(500);
-        mascotCardAnim.setStartDelay(850);
+        mascotCardAnim.setStartDelay(1050);
 
-        // Собираем всё вместе
         AnimatorSet.Builder builder = animSet.play(headerAnim);
         builder.with(progressAnim);
         builder.with(continueAnim);
-        builder.with(quickAnim);
-        builder.with(mapAnim);
-        builder.with(gamesAnim);
+        builder.with(routeLabelAnim);
+        builder.with(routeCardAnim);
+        builder.with(timelineAnim);
+        builder.with(libraryAnim);
+        builder.with(gameAnim);
         builder.with(mascotLabelAnim);
         builder.with(mascotCardAnim);
 
@@ -203,6 +199,20 @@ public class MainFragment extends Fragment {
                 }
             });
         }
+    }
+
+    private void openDistrict(int districtId) {
+        Bundle args = new Bundle();
+        args.putInt("district_id", districtId);
+        openDestination(R.id.districtDetailFragment, args);
+    }
+
+    private void openDestination(int destinationId) {
+        openDestination(destinationId, null);
+    }
+
+    private void openDestination(int destinationId, @Nullable Bundle args) {
+        NavHostFragment.findNavController(this).navigate(destinationId, args);
     }
 
     @Override

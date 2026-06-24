@@ -6,6 +6,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.biruse_kolco.data.DistrictRepository;
+import com.example.biruse_kolco.data.ProgressStore;
 import com.example.biruse_kolco.data.database.AppDatabase;
 import com.example.biruse_kolco.data.database.entities.Achievement;
 import com.example.biruse_kolco.data.database.entities.District;
@@ -43,7 +45,6 @@ public class MainViewModel extends AndroidViewModel {
 
     private void loadData() {
         executor.execute(() -> {
-            // Создаём пользователя если нет
             User currentUser = database.userDao().getUser();
             if (currentUser == null) {
                 currentUser = new User();
@@ -53,15 +54,14 @@ public class MainViewModel extends AndroidViewModel {
             user.postValue(currentUser);
             prefsManager.setUserId(currentUser.getId());
 
-            // Проверяем районы
             List<District> districtList = database.districtDao().getAllDistricts();
             if (districtList.isEmpty()) {
                 insertAllDistricts();
                 districtList = database.districtDao().getAllDistricts();
             }
             districts.postValue(districtList);
+            syncProgressStore(districtList);
 
-            // Проверяем достижения
             List<Achievement> achievementList = database.achievementDao().getAllAchievements();
             if (achievementList.isEmpty()) {
                 insertAllAchievements();
@@ -69,54 +69,39 @@ public class MainViewModel extends AndroidViewModel {
             }
             achievements.postValue(achievementList);
 
-            // Обновляем прогресс
             updateProgress();
         });
     }
 
     private void insertAllDistricts() {
-        String[][] districtsData = {
-                {"Болховский район", "Болховский район - один из древнейших районов Орловской области", "Основан в XVI веке..."},
-                {"Верховский район", "Верховский район - край лесов и полей", "История района начинается с XVII века..."},
-                {"Глазуновский район", "Глазуновский район - живописный край", "Основан в XVIII веке..."},
-                {"Дмитровский район", "Дмитровский район - земля героев", "Богатая история..."},
-                {"Должанский район", "Должанский район - степной край", "Основан в XVIII веке..."},
-                {"Залегощенский район", "Залегощенский район - край рек и озер", "История с XVII века..."},
-                {"Знаменский район", "Знаменский район - культурный центр", "Богатое культурное наследие..."},
-                {"Колпнянский район", "Колпнянский район - аграрный край", "Основан в XVIII веке..."},
-                {"Корсаковский район", "Корсаковский район - край лесов", "История с XVII века..."},
-                {"Краснозоренский район", "Краснозоренский район - край полей", "Основан в начале XX века..."},
-                {"Кромской район", "Кромской район - исторический край", "Богатая история с древних времен..."},
-                {"Ливенский район", "Ливенский район - крупнейший район", "История с XVI века..."},
-                {"Малоархангельский район", "Малоархангельский район - край церквей", "Богатое духовное наследие..."},
-                {"Мценский район", "Мценский район - древний край", "История с XII века..."},
-                {"Новодеревеньковский район", "Новодеревеньковский район - край традиций", "Основан в XVIII веке..."},
-                {"Новосильский район", "Новосильский район - исторический центр", "Богатая история..."},
-                {"Орловский район", "Орловский район - центральный район", "История с основания Орла..."},
-                {"Покровский район", "Покровский район - край храмов", "Богатое культурное наследие..."},
-                {"Свердловский район", "Свердловский район - промышленный край", "История с XVIII века..."},
-                {"Сосковский район", "Сосковский район - край лесов и рек", "Основан в XIX веке..."},
-                {"Троснянский район", "Троснянский район - край озер", "История с XVII века..."},
-                {"Урицкий район", "Урицкий район - край героев", "Богатая история..."},
-                {"Хотынецкий район", "Хотынецкий район - национальный парк", "Уникальная природа..."},
-                {"Шаблыкинский район", "Шаблыкинский район - край полей и лесов", "Основан в XVIII веке..."}
-        };
-
-        for (int i = 0; i < districtsData.length; i++) {
+        List<com.example.biruse_kolco.data.DistrictItem> source = DistrictRepository.getDistricts();
+        for (int i = 0; i < source.size(); i++) {
+            com.example.biruse_kolco.data.DistrictItem item = source.get(i);
             District district = new District();
-            district.setName(districtsData[i][0]);
-            district.setNameWithAccent(districtsData[i][0]);
-            district.setDescription(districtsData[i][1] + "\n\n🔨 TODO: Для Разработчика 2 - добавить полное описание");
-            district.setShortHistory(districtsData[i][2] + "\n\n🔨 TODO: Для Разработчика 2 - добавить полную историю");
-            district.setCoatOfArms("");
+            district.setName(item.getName());
+            district.setNameWithAccent(item.getName());
+            district.setDescription(item.getSummary());
+            district.setShortHistory(item.getHistory());
+            district.setCoatOfArms(item.getCoatOfArms());
             district.setCompleted(false);
             district.setOrderIndex(i + 1);
             district.setImageUrl("");
-            district.setInterestingFacts("🔨 TODO: Для Разработчика 2 - добавить интересные факты");
-            district.setHistoryTimeline("🔨 TODO: Для Разработчика 2 - добавить временную ленту");
-            district.setCostumeDescription("🔨 TODO: Для Разработчика 2 - добавить описание костюма");
+            district.setInterestingFacts(joinFacts(item.getFacts()));
+            district.setHistoryTimeline(item.getSubtitle());
+            district.setCostumeDescription("Материалы медиатеки доступны в разделе района");
             database.districtDao().insertDistrict(district);
         }
+    }
+
+    private String joinFacts(List<String> facts) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < facts.size(); i++) {
+            if (i > 0) {
+                builder.append("\n\n");
+            }
+            builder.append(facts.get(i));
+        }
+        return builder.toString();
     }
 
     private void insertAllAchievements() {
@@ -173,6 +158,7 @@ public class MainViewModel extends AndroidViewModel {
             database.districtDao().completeDistrict(districtId);
             database.userDao().addPoints(10);
             updateProgress();
+            syncProgressStore(database.districtDao().getAllDistricts());
         });
     }
 
@@ -208,7 +194,25 @@ public class MainViewModel extends AndroidViewModel {
                 database.achievementDao().updateAchievement(ach);
             }
 
+            syncProgressStore(allDistricts);
             updateProgress();
         });
+    }
+
+    private void syncProgressStore(List<District> districtList) {
+        for (District district : districtList) {
+            String districtKey = districtKeyForOrder(district.getOrderIndex());
+            if (districtKey != null) {
+                ProgressStore.setCompleted(getApplication(), districtKey, district.isCompleted());
+            }
+        }
+    }
+
+    private String districtKeyForOrder(int orderIndex) {
+        List<com.example.biruse_kolco.data.DistrictItem> source = DistrictRepository.getDistricts();
+        if (orderIndex <= 0 || orderIndex > source.size()) {
+            return null;
+        }
+        return source.get(orderIndex - 1).getId();
     }
 }

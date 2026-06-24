@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.biruse_kolco.R;
+import com.example.trjwm.R;
 import com.example.biruse_kolco.data.database.entities.Achievement;
 
 import java.util.ArrayList;

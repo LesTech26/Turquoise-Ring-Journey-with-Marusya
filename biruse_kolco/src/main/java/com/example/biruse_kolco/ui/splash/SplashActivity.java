@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.biruse_kolco.R;
+import com.example.trjwm.R;
 import com.example.biruse_kolco.ui.main.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {

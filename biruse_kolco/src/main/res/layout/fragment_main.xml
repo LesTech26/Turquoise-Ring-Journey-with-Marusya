@@ -12,14 +12,13 @@
         android:padding="16dp"
         android:paddingTop="32dp">
 
-        <!-- Шапка -->
         <LinearLayout
             android:id="@+id/layout_header"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
             android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -36,7 +35,7 @@
                     android:fontFamily="@font/lobster"
                     android:text="Привет,"
                     android:textColor="@color/orel_gray"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_user_name"
@@ -46,8 +45,7 @@
                     android:fontFamily="@font/lobster"
                     android:text="Путешественник 👋"
                     android:textColor="@color/orel_dark"
-                    android:textSize="24sp"/>
-
+                    android:textSize="24sp" />
             </LinearLayout>
 
             <TextView
@@ -61,11 +59,9 @@
                 android:text="Ур. 1"
                 android:textColor="@color/orel_gold"
                 android:textSize="14sp"
-                android:textStyle="bold"/>
-
+                android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Карточка прогресса -->
         <androidx.cardview.widget.CardView
             android:id="@+id/card_progress_main"
             android:layout_width="0dp"
@@ -87,11 +83,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:alpha="0.8"
                     android:fontFamily="@font/rubik"
                     android:text="Прогресс изучения"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:alpha="0.8"/>
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_progress"
@@ -102,7 +98,7 @@
                     android:text="0 / 24 районов"
                     android:textColor="@color/white"
                     android:textSize="28sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -114,8 +110,7 @@
                         android:id="@+id/view_progress_bar"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/bg_progress_modern_fill"/>
-
+                        android:background="@drawable/bg_progress_modern_fill" />
                 </FrameLayout>
 
                 <TextView
@@ -126,13 +121,10 @@
                     android:fontFamily="@font/rubik"
                     android:text="0% пройдено"
                     android:textColor="@color/orel_gold_light"
-                    android:textSize="12sp"/>
-
+                    android:textSize="12sp" />
             </LinearLayout>
-
         </androidx.cardview.widget.CardView>
 
-        <!-- Секция "Продолжить" -->
         <TextView
             android:id="@+id/tv_continue_label"
             android:layout_width="wrap_content"
@@ -144,9 +136,8 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_progress_main"/>
+            app:layout_constraintTop_toBottomOf="@id/card_progress_main" />
 
-        <!-- Кнопка продолжения -->
         <androidx.cardview.widget.CardView
             android:id="@+id/card_continue"
             android:layout_width="0dp"
@@ -165,9 +156,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="48dp"
@@ -175,13 +166,13 @@
                     android:background="@drawable/bg_icon_circle_green"
                     android:gravity="center"
                     android:text="🏛️"
-                    android:textSize="24sp"/>
+                    android:textSize="24sp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginStart="12dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
@@ -192,145 +183,150 @@
                         android:text="Болховский район"
                         android:textColor="@color/orel_dark"
                         android:textSize="16sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/rubik"
-                        android:text="Нажмите чтобы начать"
+                        android:text="Нажмите, чтобы открыть карточку района"
                         android:textColor="@color/orel_gray"
-                        android:textSize="12sp"/>
-
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/comfortaa"
-                    android:text="→"
+                    android:text=">"
                     android:textColor="@color/orel_green"
-                    android:textSize="24sp"/>
-
+                    android:textSize="24sp" />
             </LinearLayout>
-
         </androidx.cardview.widget.CardView>
 
-        <!-- Секция "Быстрый доступ" -->
         <TextView
-            android:id="@+id/tv_quick_access"
+            android:id="@+id/tv_route_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/lora"
-            android:text="Быстрый доступ"
+            android:text="@string/route_title"
             android:textColor="@color/orel_dark"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_continue"/>
+            app:layout_constraintTop_toBottomOf="@id/card_continue" />
 
-        <!-- Карта -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_map"
+            android:id="@+id/card_route_preview"
             android:layout_width="0dp"
-            android:layout_height="100dp"
+            android:layout_height="190dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
-            app:layout_constraintEnd_toStartOf="@id/guideline_mid"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_quick_access">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/bg_icon_circle_blue"
-                    android:gravity="center"
-                    android:text="🗺️"
-                    android:textSize="20sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/comfortaa"
-                    android:text="Карта"
-                    android:textColor="@color/orel_dark"
-                    android:textSize="14sp"
-                    android:textStyle="bold"/>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <!-- Игры -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_games"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="12dp"
+            app:cardCornerRadius="18dp"
             app:cardElevation="2dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/guideline_mid"
-            app:layout_constraintTop_toBottomOf="@id/tv_quick_access">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_route_label">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/bg_icon_circle_red"
-                    android:gravity="center"
-                    android:text="🎯"
-                    android:textSize="20sp"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/new_map" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/comfortaa"
-                    android:text="Игры"
-                    android:textColor="@color/orel_dark"
-                    android:textSize="14sp"
-                    android:textStyle="bold"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#40000000" />
 
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom|start"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_icon_circle_gold"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="🗺️"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/comfortaa"
+                        android:text="@string/route_open_map"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </FrameLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_mid"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/routeButtons"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5"/>
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_route_preview">
 
-        <!-- ============================================ -->
-        <!-- МЕСТО ДЛЯ МАСКОТА (3D модель) -->
-        <!-- ============================================ -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_open_timeline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:text="@string/nav_timeline"
+                android:textSize="11sp"
+                app:cornerRadius="18dp"
+                app:icon="@android:drawable/ic_menu_recent_history"
+                app:iconSize="25dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_open_library"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1.4"
+                android:text="@string/nav_library"
+                android:textColor="@color/ink_900"
+                android:textSize="11sp"
+                app:backgroundTint="@color/gold_500"
+                app:cornerRadius="18dp"
+                app:icon="@android:drawable/ic_menu_gallery"
+                app:iconSize="25dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_open_game"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/nav_game"
+                android:textSize="11sp"
+                app:backgroundTint="@color/orel_red"
+                app:cornerRadius="18dp"
+                app:icon="@android:drawable/ic_media_play"
+                android:textColor="@color/white"
+                app:iconSize="25dp"/>
+        </LinearLayout>
+
         <TextView
             android:id="@+id/tv_mascot_label"
             android:layout_width="wrap_content"
@@ -342,9 +338,8 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_map"/>
+            app:layout_constraintTop_toBottomOf="@id/routeButtons" />
 
-        <!-- Заглушка для 3D маскота -->
         <androidx.cardview.widget.CardView
             android:id="@+id/card_mascot"
             android:layout_width="0dp"
@@ -363,14 +358,13 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <!-- Заглушка: иконка маскота -->
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@drawable/bg_icon_circle_gold"
                     android:gravity="center"
                     android:text="🧸"
-                    android:textSize="40sp"/>
+                    android:textSize="40sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -379,7 +373,7 @@
                     android:fontFamily="@font/comfortaa"
                     android:text="🔄 3D модель Маруси"
                     android:textColor="@color/orel_gray"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -387,11 +381,8 @@
                     android:fontFamily="@font/rubik"
                     android:text="🔨 TODO: Разработчик 3"
                     android:textColor="@color/orel_gray_light"
-                    android:textSize="11sp"/>
-
+                    android:textSize="11sp" />
             </LinearLayout>
-
         </androidx.cardview.widget.CardView>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

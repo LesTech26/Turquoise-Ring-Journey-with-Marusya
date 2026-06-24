@@ -24,6 +24,30 @@
         tools:layout="@layout/fragment_settings" />
 
     <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.biruse_kolco.ui.map.MapFragment"
+        android:label="Карта"
+        tools:layout="@layout/fragment_map" />
+
+    <fragment
+        android:id="@+id/timelineFragment"
+        android:name="com.example.biruse_kolco.ui.timeline.TimelineFragment"
+        android:label="Лента"
+        tools:layout="@layout/fragment_timeline" />
+
+    <fragment
+        android:id="@+id/libraryFragment"
+        android:name="com.example.biruse_kolco.ui.library.LibraryFragment"
+        android:label="Медиатека"
+        tools:layout="@layout/fragment_library" />
+
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.example.biruse_kolco.ui.game.GameFragment"
+        android:label="Игра"
+        tools:layout="@layout/fragment_game" />
+
+    <fragment
         android:id="@+id/districtDetailFragment"
         android:name="com.example.biruse_kolco.ui.district.DistrictDetailFragment"
         android:label="Район"

@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <TextView
+                android:id="@+id/progressLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik"
+                android:textColor="@color/ink_700"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/progressPercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/lora"
+                android:textColor="@color/ink_900"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="12dp"
+                android:max="100"
+                android:progress="0"
+                android:progressTint="@color/turquoise_500" />
+
+            <TextView
+                android:id="@+id/mapHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/rubik"
+                android:text="@string/map_selected_hint"
+                android:textColor="@color/ink_700"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="12dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="28dp"
+        app:cardElevation="3dp">
+
+        <WebView
+            android:id="@+id/mapWebView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/openTimelineButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="@string/nav_timeline"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/blue_500"
+            app:cornerRadius="18dp"
+            app:icon="@android:drawable/ic_menu_recent_history"
+            app:iconSize="25dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/openLibraryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.4"
+            android:text="@string/nav_library"
+            android:textSize="12sp"
+            app:backgroundTint="@color/gold_500"
+            app:cornerRadius="18dp"
+            app:icon="@android:drawable/ic_menu_gallery"
+            android:textColor="@color/ink_900"
+            app:iconSize="25dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/openGameButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="@string/nav_game"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/red_500"
+            app:cornerRadius="18dp"
+            app:icon="@android:drawable/ic_media_play"
+            app:iconSize="25dp"/>
+    </LinearLayout>
+</LinearLayout>

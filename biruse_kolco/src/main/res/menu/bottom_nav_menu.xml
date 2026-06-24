@@ -12,4 +12,16 @@
         android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_settings"
         android:title="Настройки" />
+    <item
+        android:id="@+id/timelineFragment"
+        android:icon="@android:drawable/ic_menu_recent_history"
+        android:title="Лента" />
+    <item
+        android:id="@+id/libraryFragment"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="Медиатека" />
+    <item
+        android:id="@+id/gameFragment"
+        android:icon="@android:drawable/ic_media_play"
+        android:title="Игра" />
 </menu>
