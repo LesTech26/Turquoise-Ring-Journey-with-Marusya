@@ -1,9 +1,9 @@
 /**
+ * main.js
  * Точка входа — инициализация Маруси
- * 
- * Подключение:
- * <script src="/assets/marusya/src/js/main.js"></script>
+ * Адаптировано под проект turquoise
  */
+
 document.addEventListener('DOMContentLoaded', function() {
     // Проверяем, есть ли контейнер Маруси
     const container = document.getElementById('marusya-container');
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Путь к ассетам (можно переопределить через глобальную переменную)
-    const assetPath = window.MARUSYA_ASSET_PATH || '/assets/marusya/assets/img/marusya/';
+    const assetPath = window.MARUSYA_ASSET_PATH || '/mascot_interactive/assets/img/marusya/';
     
     // Создаём экземпляр
     const marusya = new Marusya({

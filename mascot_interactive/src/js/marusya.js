@@ -1,7 +1,9 @@
 /**
+ * Marusya.js
  * Главный класс Маруси — маскот проекта
- * Управляет анимациями, диалогами, эмоциями и взаимодействием
+ * Адаптировано под проект turquoise
  */
+
 class Marusya {
     constructor(options = {}) {
         // Элементы DOM
@@ -30,36 +32,28 @@ class Marusya {
         // Настройки
         this.speechDelay = options.speechDelay || 4000;
         this.autoSpeak = options.autoSpeak !== false;
-        this.assetPath = options.assetPath || '/assets/marusya/assets/img/marusya/';
+        this.assetPath = options.assetPath || '/mascot_interactive/assets/img/marusya/';
         
         this.init();
     }
     
-    /**
-     * Инициализация
-     */
     init() {
         this.setupEventListeners();
         this.setMood('happy');
         this.welcome();
         
-        // Проверяем, был ли уже тур
         const tourShown = localStorage.getItem('marusya_tour_shown');
-        if (!tourShown && document.querySelector('.marusya-tour-trigger')) {
-            setTimeout(() => this.startTour('main'), 2000);
+        if (!tourShown) {
+            setTimeout(() => this.startTour('main'), 3000);
         }
         
-        // Запускаем автоподсказки
         if (this.autoSpeak) {
             this.startAutoTips();
         }
         
-        console.log('Маруся готова!');
+        console.log('🐻 Маруся готова!');
     }
     
-    /**
-     * Настройка обработчиков событий
-     */
     setupEventListeners() {
         // Клик по Марусе
         this.element.addEventListener('click', (e) => {
@@ -125,22 +119,13 @@ class Marusya {
         });
     }
     
-    /**
-     * Приветствие
-     */
     welcome() {
         const messages = MARUSYA_DIALOGUES.welcome;
         const msg = messages[Math.floor(Math.random() * messages.length)];
         this.say(msg, 5000);
     }
     
-    /**
-     * Показать сообщение в облачке
-     * @param {string} text - Текст сообщения
-     * @param {number} duration - Длительность показа (0 = бесконечно)
-     */
     say(text, duration = 4000) {
-        // Очищаем таймер
         if (this.speechTimeout) {
             clearTimeout(this.speechTimeout);
         }
@@ -149,12 +134,10 @@ class Marusya {
         this.speech.classList.remove('hidden');
         this.speech.classList.add('show');
         
-        // Автоозвучивание
         if (this.soundEnabled && this.autoSpeak) {
             this.speak(text);
         }
         
-        // Автоскрытие
         if (duration > 0) {
             this.speechTimeout = setTimeout(() => {
                 this.hideSpeech();
@@ -162,9 +145,6 @@ class Marusya {
         }
     }
     
-    /**
-     * Скрыть облачко
-     */
     hideSpeech() {
         this.speech.classList.remove('show');
         this.speech.classList.add('hidden');
@@ -174,10 +154,6 @@ class Marusya {
         }
     }
     
-    /**
-     * Озвучить текст
-     * @param {string} text - Текст для озвучивания
-     */
     speak(text) {
         if (!this.soundEnabled) return;
         this.speech.speak(text).catch(err => {
@@ -185,14 +161,9 @@ class Marusya {
         });
     }
     
-    /**
-     * Сменить настроение
-     * @param {string} mood - Ключ эмоции (happy, sad, thinking, surprised, celebrate)
-     */
     setMood(mood) {
         if (!isValidEmotion(mood)) return;
         
-        // Убираем старые классы
         EMOTION_KEYS.forEach(key => {
             this.element.classList.remove(key);
             if (this.status) {
@@ -200,13 +171,11 @@ class Marusya {
             }
         });
         
-        // Добавляем новые
         this.element.classList.add(mood);
         if (this.status) {
             this.status.classList.add(mood);
         }
         
-        // Обновляем аватар
         const emotion = MARUSYA_EMOTIONS[mood];
         if (emotion && this.avatar) {
             this.avatar.src = this.assetPath + emotion.icon;
@@ -216,19 +185,13 @@ class Marusya {
         this.currentMood = mood;
     }
     
-    /**
-     * Обработка клика по Марусе
-     */
     handleClick() {
-        // Переключаем меню
         this.toggleMenu();
         
-        // Случайная реакция
         const reactions = MARUSYA_DIALOGUES.click_reactions;
         const msg = reactions[Math.floor(Math.random() * reactions.length)];
         this.say(msg, 3000);
         
-        // Случайная эмоция
         const randomMood = getRandomEmotion();
         this.setMood(randomMood);
         setTimeout(() => {
@@ -236,9 +199,6 @@ class Marusya {
         }, 1500);
     }
     
-    /**
-     * Переключение меню
-     */
     toggleMenu(show = null) {
         if (show === null) {
             this.menu.classList.toggle('hidden');
@@ -249,19 +209,16 @@ class Marusya {
         }
     }
     
-    /**
-     * Обработка действий меню
-     */
     handleMenuAction(action) {
         switch (action) {
             case 'help':
-                this.say('Я всегда готова помочь! Задавай вопросы!', 5000);
+                this.say('Я всегда готова помочь! Задавай вопросы! ❓', 5000);
                 this.startTour('main');
                 break;
             case 'reset':
                 if (confirm('Сбросить весь прогресс?')) {
                     localStorage.clear();
-                    this.say('Прогресс сброшен! Начинаем заново!', 4000);
+                    this.say('Прогресс сброшен! Начинаем заново! 🔄', 4000);
                     document.dispatchEvent(new CustomEvent('progressReset'));
                 }
                 break;
@@ -271,9 +228,6 @@ class Marusya {
         }
     }
     
-    /**
-     * Переключение звука
-     */
     toggleSound() {
         this.soundEnabled = !this.soundEnabled;
         const msg = this.soundEnabled 
@@ -282,28 +236,19 @@ class Marusya {
         this.say(msg, 3000);
     }
     
-    /**
-     * Переключение видимости маскота
-     */
     toggleVisibility() {
         this.isVisible = !this.isVisible;
         this.container.style.display = this.isVisible ? 'block' : 'none';
         
         if (this.isVisible) {
-            this.say('Я вернулась!', 3000);
+            this.say('Я вернулась! 👋', 3000);
         }
     }
     
-    /**
-     * Показать подсказку
-     */
     showTooltip(element, text, options = {}) {
         this.tooltips.show(element, text, options);
     }
     
-    /**
-     * Запустить тур
-     */
     startTour(tourName = 'main') {
         const tours = this.tooltips.getTours();
         const steps = tours[tourName];
@@ -317,9 +262,6 @@ class Marusya {
         localStorage.setItem('marusya_tour_shown', 'true');
     }
     
-    /**
-     * Реакция на завершение района
-     */
     onDistrictComplete(data) {
         const msg = MARUSYA_DIALOGUES.district_complete[
             Math.floor(Math.random() * MARUSYA_DIALOGUES.district_complete.length)
@@ -330,9 +272,6 @@ class Marusya {
         setTimeout(() => this.setMood('happy'), 3000);
     }
     
-    /**
-     * Реакция на победу в игре
-     */
     onGameWin(data) {
         const msgs = MARUSYA_DIALOGUES.game.win;
         const msg = msgs[Math.floor(Math.random() * msgs.length)];
@@ -342,9 +281,6 @@ class Marusya {
         setTimeout(() => this.setMood('happy'), 3000);
     }
     
-    /**
-     * Реакция на достижение
-     */
     onAchievement(data) {
         const msgs = MARUSYA_DIALOGUES.achievement;
         const msg = msgs[Math.floor(Math.random() * msgs.length)];
@@ -354,9 +290,6 @@ class Marusya {
         setTimeout(() => this.setMood('happy'), 2500);
     }
     
-    /**
-     * Реакция на посещение района
-     */
     visitDistrict(districtName) {
         const dialogues = MARUSYA_DIALOGUES.district_visit;
         const msg = dialogues[districtName] || `Отличный выбор — ${districtName}! 🌟`;
@@ -365,9 +298,6 @@ class Marusya {
         this.currentDistrict = districtName;
     }
     
-    /**
-     * Показать подсказку по элементу (туториал)
-     */
     showTipForElement(selector, tipKey = 'map') {
         const element = document.querySelector(selector);
         if (!element) return;
@@ -378,41 +308,25 @@ class Marusya {
         }
     }
     
-    /**
-     * Запуск автоматических подсказок
-     */
     startAutoTips() {
         // Подсказка по карте на главной
-        if (document.getElementById('main-map')) {
+        if (document.querySelector('.district-grid')) {
             setTimeout(() => {
-                this.showTipForElement('#main-map', 'map');
-            }, 3000);
+                this.showTipForElement('.district-grid', 'map');
+            }, 4000);
         }
         
         // Подсказка по играм
-        if (document.querySelector('.games-grid')) {
+        if (document.querySelector('.game-layout')) {
             setTimeout(() => {
-                this.showTipForElement('.games-grid', 'games');
+                this.showTipForElement('.game-panel', 'games');
             }, 5000);
         }
     }
     
-    /**
-     * Случайная фраза
-     */
     randomPhrase() {
         const phrases = MARUSYA_DIALOGUES.random;
         const msg = phrases[Math.floor(Math.random() * phrases.length)];
         this.say(msg, 5000);
     }
-}
-
-// Экспорт для Node.js (тесты)
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = Marusya;
-}
-
-// Для браузера
-if (typeof window !== 'undefined') {
-    window.Marusya = Marusya;
 }

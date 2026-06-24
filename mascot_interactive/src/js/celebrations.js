@@ -1,7 +1,8 @@
 /**
+ * celebrations.js
  * Анимации побед и празднований
- * Конфетти, звёзды, ленты
  */
+
 class MarusyaCelebrations {
     constructor() {
         this.isActive = false;
@@ -9,10 +10,6 @@ class MarusyaCelebrations {
         this.hasConfetti = typeof confetti !== 'undefined';
     }
     
-    /**
-     * Конфетти (салют)
-     * @param {Object} options - Настройки
-     */
     confetti(options = {}) {
         if (!this.hasConfetti) {
             console.warn('canvas-confetti не загружен');
@@ -23,13 +20,12 @@ class MarusyaCelebrations {
             particleCount: 150,
             spread: 70,
             origin: { y: 0.6 },
-            colors: ['#17A2B8', '#FFD700', '#CC0000', '#1E3A8A', '#4A7C59', '#E08D3C']
+            colors: ['#2BAFA0', '#E8A94A', '#D9534F', '#1C7A70', '#4F9D5D', '#8B5A3C']
         };
         
         const config = { ...defaults, ...options };
         confetti(config);
         
-        // Дополнительный залп с другой стороны
         setTimeout(() => {
             confetti({
                 ...config,
@@ -45,13 +41,9 @@ class MarusyaCelebrations {
         }, 400);
     }
     
-    /**
-     * Звёздный дождь
-     * @param {HTMLElement} container - Контейнер для эффекта
-     */
     stars(container = document.body) {
         const count = 50;
-        const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#FFE66D', '#A8E6CF'];
+        const colors = ['#E8A94A', '#FF6B6B', '#2BAFA0', '#FFE66D', '#A8E6CF'];
         
         for (let i = 0; i < count; i++) {
             const star = document.createElement('div');
@@ -78,12 +70,8 @@ class MarusyaCelebrations {
         }
     }
     
-    /**
-     * Цветные ленты
-     * @param {HTMLElement} container - Контейнер для эффекта
-     */
     ribbons(container = document.body) {
-        const colors = ['#17A2B8', '#FFD700', '#CC0000', '#1E3A8A', '#4A7C59'];
+        const colors = ['#2BAFA0', '#E8A94A', '#D9534F', '#1C7A70', '#4F9D5D'];
         const count = 30;
         
         for (let i = 0; i < count; i++) {
@@ -113,11 +101,6 @@ class MarusyaCelebrations {
         }
     }
     
-    /**
-     * Большое празднование (всё вместе)
-     * @param {string} type - Тип празднования
-     * @param {HTMLElement} container - Контейнер
-     */
     celebrate(type = 'full', container = document.body) {
         if (this.isActive) return;
         this.isActive = true;
@@ -141,15 +124,11 @@ class MarusyaCelebrations {
                 break;
         }
         
-        // Сбрасываем флаг через 3 секунды
         setTimeout(() => {
             this.isActive = false;
         }, 3000);
     }
     
-    /**
-     * Добавить CSS для анимаций (если ещё нет)
-     */
     static injectStyles() {
         if (document.getElementById('marusya-celebrations-styles')) return;
         
@@ -187,10 +166,4 @@ class MarusyaCelebrations {
     }
 }
 
-// Инжектим стили при загрузке
 MarusyaCelebrations.injectStyles();
-
-// Экспорт для Node.js (тесты)
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = MarusyaCelebrations;
-}
