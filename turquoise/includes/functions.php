@@ -133,3 +133,29 @@ function formatDate(?string $datetime, string $format = 'd.m.Y H:i'): string
     $ts = strtotime($datetime);
     return $ts ? date($format, $ts) : '—';
 }
+
+/**
+ * Возвращает 1-2 буквы инициалов из имени пользователя для плейсхолдера аватара.
+ * Поддерживает "Имя Фамилия" -> "ИФ", "ivan_petrov" -> "IP" (разделители _ . - переводятся
+ * в пробел), либо одиночное слово -> первые 2 буквы слова, либо первая буква, если слово
+ * состоит из одного символа.
+ */
+function userInitials(?string $name): string
+{
+    $name = trim((string) $name);
+    if ($name === '') {
+        return '?';
+    }
+
+    // Разбиваем по пробелам и распространённым разделителям логинов
+    $parts = preg_split('/[\s._-]+/u', $name, -1, PREG_SPLIT_NO_EMPTY);
+
+    if (count($parts) >= 2) {
+        $first  = mb_substr($parts[0], 0, 1, 'UTF-8');
+        $second = mb_substr($parts[1], 0, 1, 'UTF-8');
+        return mb_strtoupper($first . $second, 'UTF-8');
+    }
+
+    $single = $parts[0] ?? $name;
+    return mb_strtoupper(mb_substr($single, 0, 2, 'UTF-8'), 'UTF-8');
+}

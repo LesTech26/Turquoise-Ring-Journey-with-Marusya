@@ -24,7 +24,7 @@ if (!function_exists('e')) {
         <nav class="site-footer__links" aria-label="Дополнительные ссылки">
             <h2 class="site-footer__heading">Навигация</h2>
             <a href="<?= BASE_URL ?>/">Карта</a>
-            <a href="<?= BASE_URL ?>/games">Игры</a>
+            <a href="<?= BASE_URL ?>/game">Игры</a>
             <a href="<?= BASE_URL ?>/achievements">Достижения</a>
             <a href="<?= BASE_URL ?>/media">Медиатека</a>
             <a href="<?= BASE_URL ?>/about">О проекте</a>

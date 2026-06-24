@@ -36,11 +36,12 @@ $bodyClass = 'admin-body';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($pageTitle) ?> — Админ-панель</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Jost:wght@400;500;600;700&family=Comfortaa:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css?v=<?= ASSET_VERSION ?>">
 </head>
 <body>
 
 <div class="admin-layout">
+    <div class="admin-sidebar-overlay" id="adminSidebarOverlay"></div>
     <aside class="admin-sidebar" id="adminSidebar">
         <div class="admin-sidebar__brand">Бирюзовое кольцо</div>
         <?php foreach ($__adminNav as $key => $item): ?>
@@ -48,8 +49,8 @@ $bodyClass = 'admin-body';
                 <?= $item['icon'] ?> <?= e($item['label']) ?>
             </a>
         <?php endforeach; ?>
-        <a href="<?= BASE_URL ?>/" style="margin-top:auto;">← Вернуться на сайт</a>
-        <a href="<?= BASE_URL ?>/logout">Выйти</a>
+        <a href="<?= BASE_URL ?>/" class="admin-sidebar__footer-link">← Вернуться на сайт</a>
+        <a href="<?= BASE_URL ?>/logout" class="admin-sidebar__footer-link">Выйти</a>
     </aside>
 
     <main class="admin-main">
@@ -70,6 +71,6 @@ $bodyClass = 'admin-body';
     </main>
 </div>
 
-<script src="<?= BASE_URL ?>/assets/js/main.js" defer></script>
+<script src="<?= BASE_URL ?>/assets/js/main.js?v=<?= ASSET_VERSION ?>" defer></script>
 </body>
 </html>

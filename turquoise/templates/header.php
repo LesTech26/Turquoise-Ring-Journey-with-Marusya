@@ -15,7 +15,7 @@ $__currentPath = trim((string) parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL
 
 $__navItems = [
     ''             => 'Карта',
-    'game'         => 'Игры',
+    'games'        => 'Игры',
     'achievements' => 'Достижения',
     'media'        => 'Медиатека',
     'about'        => 'О проекте',
@@ -23,7 +23,6 @@ $__navItems = [
 
 function nav_is_active(string $key, string $current): string
 {
-    $current = preg_replace('#^turquoise/#', '', $current);
     if ($key === '') {
         return $current === '' ? ' is-active' : '';
     }
@@ -42,7 +41,7 @@ function nav_is_active(string $key, string $current): string
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500;600;700&family=Comfortaa:wght@400;500;700&family=Lobster&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css?v=<?= ASSET_VERSION ?>">
     <?php if (!empty($extraStyles)): foreach ($extraStyles as $href): ?>
         <link rel="stylesheet" href="<?= e($href) ?>">
     <?php endforeach; endif; ?>
@@ -89,10 +88,13 @@ function nav_is_active(string $key, string $current): string
                             <img src="<?= e(UPLOAD_URL . $__user['avatar']) ?>" alt="" class="account-menu__avatar">
                         <?php else: ?>
                             <span class="account-menu__avatar account-menu__avatar--placeholder">
-                                <?= e(mb_substr($__user['username'] ?? '?', 0, 1)) ?>
+                                <?= e(userInitials($__user['username'] ?? '')) ?>
                             </span>
                         <?php endif; ?>
                         <span class="account-menu__name"><?= e($__user['username']) ?></span>
+                        <svg class="account-menu__chevron" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false">
+                            <path d="M3 5.5 8 11l5-5.5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </button>
                     <div class="account-menu__dropdown" id="accountMenuDropdown">
                         <a href="<?= BASE_URL ?>/profile">Личный кабинет</a>

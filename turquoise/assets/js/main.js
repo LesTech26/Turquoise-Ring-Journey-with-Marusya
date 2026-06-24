@@ -12,48 +12,56 @@
 (function () {
     'use strict';
 
-    /* ---------- Мобильное меню ---------- */
+    /* ---------- Мобильное меню навигации + меню аккаунта (взаимоисключающие) ---------- */
     var burger = document.getElementById('burgerBtn');
     var nav = document.getElementById('main-nav');
+    var accountTrigger = document.getElementById('accountMenuTrigger');
+    var accountDropdown = document.getElementById('accountMenuDropdown');
+
+    function setNavOpen(isOpen) {
+        if (!nav || !burger) return;
+        nav.classList.toggle('is-open', isOpen);
+        burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        burger.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+    }
+
+    function setAccountOpen(isOpen) {
+        if (!accountDropdown || !accountTrigger) return;
+        accountDropdown.classList.toggle('is-open', isOpen);
+        accountTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
 
     if (burger && nav) {
         burger.addEventListener('click', function () {
-            var isOpen = nav.classList.toggle('is-open');
-            burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-            burger.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+            var willOpen = !nav.classList.contains('is-open');
+            if (willOpen) setAccountOpen(false); // закрываем меню профиля, чтобы не пересекались
+            setNavOpen(willOpen);
         });
 
         // Закрытие меню при клике на ссылку (мобильный UX)
         nav.querySelectorAll('a').forEach(function (link) {
-            link.addEventListener('click', function () {
-                nav.classList.remove('is-open');
-                burger.setAttribute('aria-expanded', 'false');
-            });
+            link.addEventListener('click', function () { setNavOpen(false); });
         });
     }
-
-    /* ---------- Меню аккаунта ---------- */
-    var accountTrigger = document.getElementById('accountMenuTrigger');
-    var accountDropdown = document.getElementById('accountMenuDropdown');
 
     if (accountTrigger && accountDropdown) {
         accountTrigger.addEventListener('click', function (e) {
             e.stopPropagation();
-            var isOpen = accountDropdown.classList.toggle('is-open');
-            accountTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            var willOpen = !accountDropdown.classList.contains('is-open');
+            if (willOpen) setNavOpen(false); // закрываем нав-меню, чтобы не пересекались
+            setAccountOpen(willOpen);
         });
 
         document.addEventListener('click', function (e) {
             if (!accountDropdown.contains(e.target) && e.target !== accountTrigger) {
-                accountDropdown.classList.remove('is-open');
-                accountTrigger.setAttribute('aria-expanded', 'false');
+                setAccountOpen(false);
             }
         });
 
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
-                accountDropdown.classList.remove('is-open');
-                accountTrigger.setAttribute('aria-expanded', 'false');
+                setAccountOpen(false);
+                setNavOpen(false);
             }
         });
     }
@@ -86,13 +94,46 @@
         });
     });
 
+    /* ---------- Анимация прогресс-бара профиля ---------- */
+    var progressFill = document.getElementById('profileProgressFill');
+    if (progressFill) {
+        requestAnimationFrame(function () {
+            setTimeout(function () {
+                progressFill.classList.add('is-ready');
+            }, 50);
+        });
+    }
+
     /* ---------- Сайдбар админки на мобильных ---------- */
     var adminToggle = document.getElementById('adminSidebarToggle');
     var adminSidebar = document.getElementById('adminSidebar');
+    var adminOverlay = document.getElementById('adminSidebarOverlay');
+
+    function setAdminSidebar(isOpen) {
+        if (!adminSidebar) return;
+        adminSidebar.classList.toggle('is-open', isOpen);
+        if (adminOverlay) adminOverlay.classList.toggle('is-open', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    if (adminSidebar) {
+        // Гарантируем закрытое состояние при каждой загрузке страницы
+        setAdminSidebar(false);
+    }
 
     if (adminToggle && adminSidebar) {
         adminToggle.addEventListener('click', function () {
-            adminSidebar.classList.toggle('is-open');
+            setAdminSidebar(!adminSidebar.classList.contains('is-open'));
+        });
+    }
+    if (adminOverlay) {
+        adminOverlay.addEventListener('click', function () {
+            setAdminSidebar(false);
+        });
+    }
+    if (adminSidebar) {
+        adminSidebar.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () { setAdminSidebar(false); });
         });
     }
 })();
