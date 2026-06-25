@@ -14,6 +14,39 @@
     -webkit-tap-highlight-color: transparent;
 }
 
+#marusya-container.marusya-container--embedded {
+    position: static;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 260px;
+}
+
+#marusya-container.marusya-container--embedded .marusya {
+    width: 220px;
+    height: 260px;
+}
+
+#marusya-container.marusya-container--embedded .speech-bubble {
+    bottom: auto;
+    top: 12px;
+    right: 210px;
+}
+
+#marusya-container.marusya-container--embedded .speech-tail {
+    bottom: auto;
+    top: 44px;
+    right: -28px;
+    transform: rotate(-90deg);
+}
+
+#marusya-container.marusya-container--embedded .marusya-menu {
+    bottom: 24px;
+    right: 200px;
+}
+
 /* ----- Аватар маскота ----- */
 .marusya {
     position: relative;
@@ -48,6 +81,23 @@
     box-shadow: 0 4px 20px rgba(43, 175, 160, 0.4);
     object-fit: cover;
     border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.marusya-video {
+    display: block;
+}
+
+.marusya-avatar-fallback {
+    display: none;
+}
+
+.marusya-video.is-unavailable,
+.marusya-video.is-unavailable + .marusya-avatar-fallback {
+    display: block;
+}
+
+.marusya-video.is-unavailable {
+    display: none;
 }
 
 /* ----- Статус-индикатор ----- */
@@ -419,6 +469,69 @@
     100% { transform: scale(1.1) rotate(8deg); }
 }
 
+.marusya.gesture-wave .marusya-avatar {
+    animation: marusyaWave 0.8s ease-in-out 2;
+    transform-origin: 50% 85%;
+}
+
+.marusya.gesture-nod .marusya-avatar {
+    animation: marusyaNod 0.65s ease-in-out 2;
+}
+
+.marusya.gesture-shake .marusya-avatar {
+    animation: marusyaShake 0.55s ease-in-out 2;
+}
+
+.marusya.gesture-talk .marusya-avatar {
+    animation: marusyaTalk 0.35s ease-in-out infinite alternate;
+}
+
+.marusya.gesture-spark .marusya-avatar-wrapper::before,
+.marusya.gesture-spark .marusya-avatar-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    border: 2px solid rgba(232, 169, 74, 0.7);
+    border-radius: 50%;
+    animation: marusyaSpark 1s ease-out infinite;
+    pointer-events: none;
+}
+
+.marusya.gesture-spark .marusya-avatar-wrapper::after {
+    animation-delay: 0.35s;
+    border-color: rgba(43, 175, 160, 0.6);
+}
+
+@keyframes marusyaWave {
+    0%, 100% { transform: rotate(0deg) translateY(0); }
+    25% { transform: rotate(-14deg) translateY(-4px); }
+    50% { transform: rotate(10deg) translateY(-8px); }
+    75% { transform: rotate(-8deg) translateY(-4px); }
+}
+
+@keyframes marusyaNod {
+    0%, 100% { transform: translateY(0) scaleY(1); }
+    50% { transform: translateY(7px) scaleY(0.94); }
+}
+
+@keyframes marusyaShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-7px) rotate(-4deg); }
+    40% { transform: translateX(7px) rotate(4deg); }
+    60% { transform: translateX(-5px) rotate(-3deg); }
+    80% { transform: translateX(5px) rotate(3deg); }
+}
+
+@keyframes marusyaTalk {
+    0% { transform: scale(1) translateY(0); filter: brightness(1); }
+    100% { transform: scale(1.04) translateY(-3px); filter: brightness(1.08); }
+}
+
+@keyframes marusyaSpark {
+    0% { opacity: 0.9; transform: scale(0.8); }
+    100% { opacity: 0; transform: scale(1.45); }
+}
+
 @keyframes pulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.2); }
@@ -668,6 +781,15 @@
     }
     
     .marusya.thinking .marusya-avatar {
+        animation: none;
+    }
+
+    .marusya.gesture-wave .marusya-avatar,
+    .marusya.gesture-nod .marusya-avatar,
+    .marusya.gesture-shake .marusya-avatar,
+    .marusya.gesture-talk .marusya-avatar,
+    .marusya.gesture-spark .marusya-avatar-wrapper::before,
+    .marusya.gesture-spark .marusya-avatar-wrapper::after {
         animation: none;
     }
     

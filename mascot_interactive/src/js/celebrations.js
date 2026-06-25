@@ -12,7 +12,8 @@ class MarusyaCelebrations {
     
     confetti(options = {}) {
         if (!this.hasConfetti) {
-            console.warn('canvas-confetti не загружен');
+            this.ribbons();
+            this.stars();
             return;
         }
         

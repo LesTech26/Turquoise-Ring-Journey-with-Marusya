@@ -11,7 +11,7 @@ class MarusyaSpeech {
         this.pitch = 1.2;
         this.volume = 1;
         this.isSpeaking = false;
-        this.synthesis = window.speechSynthesis;
+        this.synthesis = window.speechSynthesis || null;
         this.voicesLoaded = false;
         
         this.init();
@@ -35,9 +35,9 @@ class MarusyaSpeech {
     setVoice() {
         const voices = this.synthesis.getVoices();
         this.voice = voices.find(v => 
-            v.lang.includes('ru') && 
-            (v.name.includes('Female') || v.name.includes('женский'))
-        ) || voices.find(v => v.lang.includes('ru')) || voices[0];
+            v.lang.toLowerCase().includes('ru') && 
+            /female|woman|жен/i.test(v.name)
+        ) || voices.find(v => v.lang.toLowerCase().includes('ru')) || voices[0];
         
         this.voicesLoaded = true;
     }
@@ -51,7 +51,7 @@ class MarusyaSpeech {
             
             this.cancel();
             
-            const utterance = new SpeechSynthesisUtterance(text);
+            const utterance = new SpeechSynthesisUtterance(this.prepareText(text));
             utterance.lang = options.lang || 'ru-RU';
             utterance.rate = options.rate || this.rate;
             utterance.pitch = options.pitch || this.pitch;
@@ -98,6 +98,13 @@ class MarusyaSpeech {
     
     static isSupported() {
         return 'speechSynthesis' in window;
+    }
+
+    prepareText(text) {
+        return String(text)
+            .replace(/[\u{1F300}-\u{1FAFF}]/gu, '')
+            .replace(/\s+/g, ' ')
+            .trim();
     }
 }
 

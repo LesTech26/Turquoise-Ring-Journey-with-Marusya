@@ -9,6 +9,7 @@ class MarusyaTooltips {
         this.activeTooltips = new Set();
         this.tooltipTimeout = null;
         this.isTourActive = false;
+        this.highlightedElement = null;
         
         this.tooltipElement = document.getElementById('marusya-tooltip');
         if (!this.tooltipElement) {
@@ -56,6 +57,8 @@ class MarusyaTooltips {
         if (this.tooltipTimeout) {
             clearTimeout(this.tooltipTimeout);
         }
+
+        this.clearHighlight();
         
         const rect = element.getBoundingClientRect();
         const tooltip = this.tooltipElement;
@@ -70,6 +73,7 @@ class MarusyaTooltips {
             element.classList.add('tooltip-highlight');
             element.style.position = 'relative';
             element.style.zIndex = '9998';
+            this.highlightedElement = element;
         }
         
         if (duration > 0) {
@@ -129,11 +133,18 @@ class MarusyaTooltips {
         }
         
         this.tooltipElement.classList.add('hidden');
-        
-        if (element) {
-            element.classList.remove('tooltip-highlight');
-            element.style.position = '';
-            element.style.zIndex = '';
+        this.clearHighlight(element);
+    }
+
+    clearHighlight(element = this.highlightedElement) {
+        if (!element) return;
+
+        element.classList.remove('tooltip-highlight');
+        element.style.position = '';
+        element.style.zIndex = '';
+
+        if (this.highlightedElement === element) {
+            this.highlightedElement = null;
         }
     }
     
@@ -146,6 +157,8 @@ class MarusyaTooltips {
         const showStep = () => {
             if (currentStep >= steps.length) {
                 this.isTourActive = false;
+                this.hide();
+                document.dispatchEvent(new CustomEvent('marusyaTourComplete'));
                 return;
             }
             
