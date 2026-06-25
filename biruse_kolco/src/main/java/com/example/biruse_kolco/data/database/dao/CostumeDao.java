@@ -27,5 +27,6 @@ public interface CostumeDao {
     @Query("SELECT * FROM costumes")
     List<Costume> getAllCostumes();
 
-    // TODO: Для Разработчика 3 - добавить методы для переодевания
+    @Query("DELETE FROM costumes")
+    void deleteAllCostumes();
 }
