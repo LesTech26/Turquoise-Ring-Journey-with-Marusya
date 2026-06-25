@@ -2,3 +2,14 @@
 /biruse_kolco/.idea
 /biruse_kolco/.tz
 /biruse_kolco/build
+.gradle/
+build/
+local.properties
+**/.gradle/
+**/build/
+.idea/*
+!.idea/runConfigurations/
+!.idea/runConfigurations/*.xml
+/gradle/
+/gradlew
+/gradlew.bat
