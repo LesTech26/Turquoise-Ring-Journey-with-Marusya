@@ -41,6 +41,11 @@
             android:finishOnTaskLaunch="true"
             android:excludeFromRecents="false" />
 
+        <activity
+            android:name="com.example.biruse_kolco.admin_panel.AdminActivity"
+            android:exported="false"
+            android:forceDarkAllowed="false" />
+
     </application>
 
 </manifest>

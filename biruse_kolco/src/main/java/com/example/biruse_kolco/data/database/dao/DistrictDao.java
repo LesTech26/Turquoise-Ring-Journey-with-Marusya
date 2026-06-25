@@ -42,5 +42,6 @@ public interface DistrictDao {
     @Query("SELECT COUNT(*) FROM districts")
     int getTotalCount();
 
-    // TODO: Для Разработчика 2 - добавить методы для поиска и фильтрации
+    @Query("DELETE FROM districts")
+    void deleteAllDistricts();
 }

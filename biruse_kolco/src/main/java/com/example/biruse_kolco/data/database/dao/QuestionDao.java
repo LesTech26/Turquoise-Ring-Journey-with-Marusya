@@ -27,5 +27,6 @@ public interface QuestionDao {
     @Query("SELECT * FROM questions")
     List<Question> getAllQuestions();
 
-    // TODO: Для Разработчика 4 - добавить методы для викторины
+    @Query("DELETE FROM questions")
+    void deleteAllQuestions();
 }
