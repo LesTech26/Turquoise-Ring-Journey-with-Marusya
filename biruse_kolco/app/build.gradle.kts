@@ -12,14 +12,25 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
+        resourceConfigurations += setOf("ru")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         resValue("string", "yandex_mapkit_api_key", "882daaab-98e5-4fec-bcbb-9169b377d8f1")
     }
 
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("arm64-v8a", "armeabi-v7a")
+            isUniversalApk = false
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
