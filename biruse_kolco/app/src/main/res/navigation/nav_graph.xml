@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.biruse_kolco.ui.main.MainFragment"
+        android:label="Главная"
+        tools:layout="@layout/fragment_main">
+
+        <action
+            android:id="@+id/action_main_to_district_detail"
+            app:destination="@id/districtDetailFragment" />
+
+        <action
+            android:id="@+id/action_main_to_map"
+            app:destination="@id/mapFragment" />
+
+        <action
+            android:id="@+id/action_main_to_timeline"
+            app:destination="@id/timelineFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.biruse_kolco.trjwm.ui.MapFragment"
+        android:label="Карта"
+        tools:layout="@layout/fragment_map" />
+
+    <fragment
+        android:id="@+id/libraryFragment"
+        android:name="com.example.biruse_kolco.ui.library.LibraryFragment"
+        android:label="Медиатека"
+        tools:layout="@layout/fragment_library" />
+
+    <fragment
+        android:id="@+id/timelineFragment"
+        android:name="com.example.biruse_kolco.ui.timeline.TimelineFragment"
+        android:label="Лента"
+        tools:layout="@layout/fragment_timeline" />
+
+    <fragment
+        android:id="@+id/achievementsFragment"
+        android:name="com.example.biruse_kolco.ui.achievements.AchievementsFragment"
+        android:label="Достижения"
+        tools:layout="@layout/fragment_achievements" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.biruse_kolco.ui.settings.SettingsFragment"
+        android:label="Настройки"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/districtDetailFragment"
+        android:name="com.example.biruse_kolco.trjwm.ui.DistrictDetailFragment"
+        android:label="Район"
+        tools:layout="@layout/fragment_district_detail" />
+
+</navigation>

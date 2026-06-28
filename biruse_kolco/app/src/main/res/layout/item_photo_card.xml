@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <!-- ИЗОБРАЖЕНИЕ ФОТО -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:id="@+id/photoImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_photo_circle"
+                android:clipToOutline="true"
+                android:outlineProvider="background"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_foreground"
+                android:contentDescription="Фото района" />
+
+            <TextView
+                android:id="@+id/photoBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_margin="4dp"
+                android:background="@drawable/bg_photo_badge"
+                android:fontFamily="@font/rubik"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="Фото 1"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/photoTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/comfortaa"
+            android:text="Название"
+            android:textColor="@color/dark"
+            android:textSize="13sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

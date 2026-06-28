@@ -1,0 +1,54 @@
+<resources>
+    <!-- ========================================== -->
+    <!-- ОСНОВНЫЕ СТРОКИ (ваши) -->
+    <!-- ========================================== -->
+    <string name="app_name">Бирюзовое кольцо: Путешествие с Марусей</string>
+    <string name="app_name_short">Бирюзовое кольцо</string>
+    <string name="splash_slogan">Открой традиции Орловского края!</string>
+    <string name="menu_map">Карта</string>
+    <string name="menu_achievements">Достижения</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="loading">Загрузка...</string>
+    <string name="progress">Прогресс</string>
+    <string name="districts_completed">Изучено: %d / 24 районов</string>
+    <string name="settings_sound">Звук</string>
+    <string name="settings_language">Язык</string>
+    <string name="settings_reset">Сбросить прогресс</string>
+    <string name="settings_reset_confirm">Вы уверены, что хотите сбросить весь прогресс?</string>
+    <string name="achievements_title">Достижения</string>
+    <string name="achievements_unlocked">Открыто</string>
+    <string name="achievements_locked">Закрыто</string>
+    <string name="continue_learning">Продолжить изучение</string>
+    <string name="welcome_back">С возвращением!</string>
+    <string name="tap_to_start">Нажмите, чтобы начать</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- ========================================== -->
+    <!-- СТРОКИ ИЗ МОДУЛЯ КАРТЫ (map_module) -->
+    <!-- ========================================== -->
+    <string name="app_tagline">Карта, история и материалы по 24 районам Орловской области</string>
+    <string name="nav_map">Карта</string>
+    <string name="nav_timeline">Лента</string>
+    <string name="nav_library">Медиатека</string>
+    <string name="map_title">Интерактивная карта Орловской области</string>
+    <string name="timeline_title">Временная лента истории</string>
+    <string name="library_title">Медиатека районов</string>
+    <string name="district_title">Район</string>
+    <string name="district_history">История</string>
+    <string name="district_facts">Факты</string>
+    <string name="district_photos">Фотографии</string>
+    <string name="district_mark_complete">Отметить как пройденный</string>
+    <string name="district_mark_done">Пройдено</string>
+    <string name="district_open_timeline">Открыть ленту</string>
+    <string name="district_open_library">Открыть медиатеку</string>
+    <string name="map_completed_format">Пройдено: %1$d из %2$d</string>
+    <string name="map_progress_format">%1$d%% маршрута</string>
+    <string name="map_selected_hint">Нажимайте на точки карты, чтобы открыть краткую информацию и карточку района.</string>
+    <string name="timeline_selected">Выбранный период</string>
+    <string name="library_materials">Материалы</string>
+
+    <!-- ========================================== -->
+    <!-- СТРОКИ ИЗ МОДУЛЯ ИГР (games_module) -->
+    <!-- ========================================== -->
+    <string name="games_app_name">Игры Бирюзового кольца</string>
+</resources>

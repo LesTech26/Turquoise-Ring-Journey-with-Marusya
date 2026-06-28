@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:name=".BiruseKolcoApp"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BiruseKolco"
+        tools:targetApi="31">
+
+        <!-- ============================================================ -->
+        <!-- SplashActivity - ЗАПУСКАЕТСЯ ПЕРВОЙ -->
+        <!-- ============================================================ -->
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.BiruseKolco.Splash"
+            android:launchMode="singleTop"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- ============================================================ -->
+        <!-- MainActivity - ОСНОВНАЯ АКТИВИТИ -->
+        <!-- ============================================================ -->
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="false"
+            android:launchMode="standard" />
+
+        <!-- ============================================================ -->
+        <!-- AdminActivity - АДМИН-ПАНЕЛЬ -->
+        <!-- ============================================================ -->
+        <activity
+            android:name=".admin_panel.AdminActivity"
+            android:exported="false"
+            android:label="Админ-панель"
+            android:theme="@style/Theme.BiruseKolco" />
+
+        <!-- ============================================================ -->
+        <!-- Games Activity -->
+        <!-- ============================================================ -->
+        <activity
+            android:name="com.example.biruse_kolco.games.MainActivity"
+            android:exported="false"
+            android:label="Игры" />
+
+    </application>
+
+</manifest>

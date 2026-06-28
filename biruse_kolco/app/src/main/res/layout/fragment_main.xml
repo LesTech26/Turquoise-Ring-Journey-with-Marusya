@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:paddingTop="32dp">
+
+        <!-- Шапка -->
+        <LinearLayout
+            android:id="@+id/layout_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lobster"
+                    android:text="Привет,"
+                    android:textColor="@color/orel_gray"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/lobster"
+                    android:text="Путешественник"
+                    android:textColor="@color/orel_dark"
+                    android:textSize="24sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_level_modern"
+                android:fontFamily="@font/comfortaa"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="6dp"
+                android:text="Ур. 1"
+                android:textColor="@color/orel_gold"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <!-- Карточка прогресса -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_progress_main"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/orel_green"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_header">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik"
+                    android:text="Прогресс изучения"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:alpha="0.8"/>
+
+                <TextView
+                    android:id="@+id/tv_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/lora"
+                    android:text="0 / 5 районов"
+                    android:textColor="@color/white"
+                    android:textSize="28sp"
+                    android:textStyle="bold"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_progress_modern_empty">
+
+                    <View
+                        android:id="@+id/view_progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_progress_modern_fill"/>
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_progress_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/rubik"
+                    android:text="0% пройдено"
+                    android:textColor="@color/orel_gold_light"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Секция "Продолжить" -->
+        <TextView
+            android:id="@+id/tv_continue_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/lora"
+            android:text="Продолжить изучение"
+            android:textColor="@color/orel_dark"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_progress_main"/>
+
+        <!-- Кнопка продолжения -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_continue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_continue_label">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/iv_next_district_coat"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_icon_circle_green"
+                    android:contentDescription="Герб района"
+                    android:padding="6dp"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/gerb"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_next_district"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/comfortaa"
+                        android:text="Хотынецкий район"
+                        android:textColor="@color/orel_dark"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_next_district_hint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/rubik"
+                        android:text="Нажмите чтобы начать"
+                        android:textColor="@color/orel_gray"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:text="→"
+                    android:textColor="@color/orel_green"
+                    android:textSize="24sp"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Кнопка "Завершить обучение" (скрыта по умолчанию) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_complete_training"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/gold"
+            android:text="Завершить обучение"
+            android:textColor="@color/dark"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:cornerRadius="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_continue"/>
+
+        <!-- Секция "Быстрый доступ" -->
+        <TextView
+            android:id="@+id/tv_quick_access"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/lora"
+            android:text="Быстрый доступ"
+            android:textColor="@color/orel_dark"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_complete_training"/>
+
+        <!-- Карта -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_map"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="6dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toStartOf="@id/guideline_quick_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_quick_access">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_icon_circle_blue"
+                    android:gravity="center"
+                    android:text="🗺"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/comfortaa"
+                    android:text="Карта"
+                    android:textColor="@color/orel_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Игры -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_games"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toStartOf="@id/guideline_quick_2"
+            app:layout_constraintStart_toStartOf="@id/guideline_quick_1"
+            app:layout_constraintTop_toBottomOf="@id/tv_quick_access">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_icon_circle_red"
+                    android:gravity="center"
+                    android:text="★"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/comfortaa"
+                    android:text="Игры"
+                    android:textColor="@color/orel_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Лента -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_timeline"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="6dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline_quick_2"
+            app:layout_constraintTop_toBottomOf="@id/tv_quick_access">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_icon_circle_gold"
+                    android:gravity="center"
+                    android:text="⏳"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/comfortaa"
+                    android:text="Лента"
+                    android:textColor="@color/orel_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_quick_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.33"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_quick_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.66"/>
+
+        <!-- Маруся -->
+        <TextView
+            android:id="@+id/tv_mascot_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/lora"
+            android:text="Маруся"
+            android:textColor="@color/orel_dark"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_map"/>
+
+        <!-- Заглушка для 3D маскота -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_mascot"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="8dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_mascot_label">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/bg_icon_circle_gold"
+                    android:gravity="center"
+                    android:text="M"
+                    android:textSize="40sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/comfortaa"
+                    android:text="3D модель Маруси"
+                    android:textColor="@color/orel_gray"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik"
+                    android:text="Разработчик 3"
+                    android:textColor="@color/orel_gray_light"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
