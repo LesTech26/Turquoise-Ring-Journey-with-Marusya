@@ -39,7 +39,6 @@ public class Constants {
     // ДОБАВЛЯЕМ ЭТИ КОНСТАНТЫ
     // ============================================================
     public static final int ADMIN_SECRET_TAPS = 5;
-    public static final int ADMIN_ACCESS_HINT_THRESHOLD = 2;
     public static final long ADMIN_TAP_RESET_MS = 1200L;
     public static final String ADMIN_JSON_CLIPBOARD_LABEL = "admin_json";
 
