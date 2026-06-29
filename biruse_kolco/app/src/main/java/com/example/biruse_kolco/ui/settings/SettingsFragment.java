@@ -1,11 +1,14 @@
 package com.example.biruse_kolco.ui.settings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,14 +17,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.biruse_kolco.R;
+import com.example.biruse_kolco.admin_panel.AdminActivity;
 import com.example.biruse_kolco.model.MainViewModel;
-import com.google.android.material.button.MaterialButton;
+import com.example.biruse_kolco.utils.Constants;
 import com.google.android.material.snackbar.Snackbar;
 
 public class SettingsFragment extends Fragment {
 
     private MainViewModel viewModel;
-    private MaterialButton btnResetProgress;
+    private Button btnResetProgress;
+    private int adminTapCount = 0;
+    private long lastAdminTapTime = 0L;
 
     @Nullable
     @Override
@@ -35,8 +41,11 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         btnResetProgress = view.findViewById(R.id.btn_reset_progress);
+        TextView tvAppName = view.findViewById(R.id.tv_app_name);
 
         viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+
+        tvAppName.setOnClickListener(v -> registerAdminTap());
 
         btnResetProgress.setOnClickListener(v -> {
             new AlertDialog.Builder(requireContext())
@@ -56,5 +65,19 @@ public class SettingsFragment extends Fragment {
                     .setNegativeButton("Отмена", null)
                     .show();
         });
+    }
+
+    private void registerAdminTap() {
+        long now = System.currentTimeMillis();
+        if (now - lastAdminTapTime > Constants.ADMIN_TAP_RESET_MS) {
+            adminTapCount = 0;
+        }
+        lastAdminTapTime = now;
+        adminTapCount++;
+
+        if (adminTapCount >= Constants.ADMIN_SECRET_TAPS) {
+            adminTapCount = 0;
+            startActivity(new Intent(requireContext(), AdminActivity.class));
+        }
     }
 }
